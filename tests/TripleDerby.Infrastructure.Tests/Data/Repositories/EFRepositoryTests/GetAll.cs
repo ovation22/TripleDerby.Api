@@ -15,9 +15,9 @@ namespace TripleDerby.Infrastructure.Tests.Data.Repositories.EFRepositoryTests
         public GetAll()
         {
             using var context = new TripleDerbyContext(Options);
-            context.Horses.Add(new Horse {Id = Guid.NewGuid(), IsActive = true});
-            context.Horses.Add(new Horse {Id = Guid.NewGuid(), IsActive = true });
-            context.Horses.Add(new Horse {Id = Guid.NewGuid(), IsActive = true });
+            context.Horses.Add(new Horse {Id = Guid.NewGuid()});
+            context.Horses.Add(new Horse {Id = Guid.NewGuid()});
+            context.Horses.Add(new Horse {Id = Guid.NewGuid()});
             context.SaveChanges();
         }
 
@@ -29,11 +29,11 @@ namespace TripleDerby.Infrastructure.Tests.Data.Repositories.EFRepositoryTests
             var repository = new TripleDerbyRepository(context);
 
             // Act
-            var speakers = (List<Horse>) await repository.GetAll<Horse>();
+            var horses = (List<Horse>) await repository.GetAll<Horse>();
 
             // Assert
-            Assert.IsAssignableFrom<IEnumerable<Horse>>(speakers);
-            Assert.Equal(context.Horses.Count(), speakers.Count);
+            Assert.IsAssignableFrom<IEnumerable<Horse>>(horses);
+            Assert.Equal(context.Horses.Count(), horses.Count);
         }
 
         [Fact]
@@ -44,11 +44,11 @@ namespace TripleDerby.Infrastructure.Tests.Data.Repositories.EFRepositoryTests
             var repository = new TripleDerbyRepository(context);
 
             // Act
-            var speakers = (List<Horse>) await repository.GetAll<Horse>(x => true);
+            var horses = (List<Horse>) await repository.GetAll<Horse>(x => true);
 
             // Assert
-            Assert.IsAssignableFrom<IEnumerable<Horse>>(speakers);
-            Assert.Equal(context.Horses.Count(), speakers.Count);
+            Assert.IsAssignableFrom<IEnumerable<Horse>>(horses);
+            Assert.Equal(context.Horses.Count(), horses.Count);
         }
     }
 }

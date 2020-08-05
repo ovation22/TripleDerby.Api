@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,7 @@ using TripleDerby.Infrastructure.Utilities;
 
 namespace TripleDerby.Api
 {
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         public IConfiguration Configuration { get; }
@@ -62,6 +64,7 @@ namespace TripleDerby.Api
             app.UseSwaggerConfig();
             app.UseCorsConfig();
             app.UseHttpsRedirection();
+            app.UseAuthentication();
 
             app.UseRouting();
 

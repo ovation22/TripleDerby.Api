@@ -29,10 +29,10 @@ namespace TripleDerby.Infrastructure.Tests.Data.Repositories.EFRepositoryTests
             var repository = new TripleDerbyRepository(context);
 
             // Act
-            var speaker = await repository.Get<Horse>(x => x.Id == _id);
+            var horse = await repository.Get<Horse>(x => x.Id == _id);
 
             // Assert
-            Assert.IsAssignableFrom<Horse>(speaker);
+            Assert.IsAssignableFrom<Horse>(horse);
         }
     }
 }

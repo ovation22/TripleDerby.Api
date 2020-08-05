@@ -11,7 +11,7 @@ namespace TripleDerby.Api.Config
         public static void AddHealthCheckConfig(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddHealthChecks()
-                .AddSqlServer(configuration.GetConnectionString("SpeakerMeet"))
+                .AddSqlServer(configuration.GetConnectionString("HorseMeet"))
                 .AddRedis(configuration["Cache:Configuration"]);
         }
 

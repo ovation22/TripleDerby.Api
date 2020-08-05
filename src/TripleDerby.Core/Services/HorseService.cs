@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
-using TripleDerby.Core.Cache;
 using TripleDerby.Core.DTOs;
 using TripleDerby.Core.Entities;
-using TripleDerby.Core.Interfaces.Caching;
 using TripleDerby.Core.Interfaces.Repositories;
 using TripleDerby.Core.Interfaces.Services;
 
@@ -14,16 +11,13 @@ namespace TripleDerby.Core.Services
 {
     public class HorseService : IHorseService
     {
-        private readonly int _cacheExpirationMinutes;
         private readonly ITripleDerbyRepository _repository;
 
         public HorseService(
-            ITripleDerbyRepository repository,
-            IOptions<CacheConfig> cacheOptions
+            ITripleDerbyRepository repository
         )
         {
             _repository = repository;
-            _cacheExpirationMinutes = cacheOptions.Value.DefaultExpirationMinutes;
         }
 
         public async Task<HorseResult> Get(Guid id)
