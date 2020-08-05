@@ -38,11 +38,11 @@ namespace TripleDerby.Infrastructure.Data.Repositories
             return await dbSet.Include(include).Where(expression).ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetRandom<T>(int count) where T : class
+        public async Task<IEnumerable<T>> GetRandom<T>(Expression<Func<T, bool>> expression, int count) where T : class
         {
             var dbSet = _context.Set<T>();
 
-            return await dbSet.OrderBy(x => Guid.NewGuid()).Take(count).ToListAsync();
+            return await dbSet.Where(expression).OrderBy(x => Guid.NewGuid()).Take(count).ToListAsync();
         }
     }
 }

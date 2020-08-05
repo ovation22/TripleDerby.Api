@@ -4,21 +4,21 @@ using System.Threading.Tasks;
 using TripleDerby.Core.Entities;
 using Xunit;
 
-namespace TripleDerby.Infrastructure.Tests.Data.Repositories.EFRepositoryTests
+namespace TripleDerby.Infrastructure.Tests.Data.Repositories.TripleDerbyRepositoryTests
 {
-    [Trait("Category", "EFRepository")]
-    public class GetAll : EFRepositoryTestBase
+    [Trait("Category", "TripleDerbyRepository")]
+    public class GetAll : TripleDerbyRepositoryTestBase
     {
         public GetAll(ContextFixture fixture) : base(fixture)
         {
         }
 
         [Fact]
-        public async Task ItReturnsAllHorse()
+        public async Task ItReturnsAllHorseByExpression()
         {
             // Arrange
             // Act
-            var horses = (List<Horse>) await Repository.GetAll<Horse>();
+            var horses = (List<Horse>) await Repository.GetAll<Horse>(x => true);
 
             // Assert
             Assert.IsAssignableFrom<IEnumerable<Horse>>(horses);

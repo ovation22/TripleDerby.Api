@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using TripleDerby.Core.Entities;
-using TripleDerby.Infrastructure.Data;
-using TripleDerby.Infrastructure.Data.Repositories;
 using Xunit;
 
 namespace TripleDerby.Infrastructure.Tests.Data.Repositories.EFRepositoryTests
@@ -12,28 +10,24 @@ namespace TripleDerby.Infrastructure.Tests.Data.Repositories.EFRepositoryTests
     {
         private readonly Horse _horse;
 
-        public Update()
+        public Update(ContextFixture fixture) : base(fixture)
         {
             _horse = new Horse{Id = new Guid("5FD2E324-A935-484E-8F9F-F52E7921EF21")};
-            using var context = new TripleDerbyContext(Options);
-            context.Horses.Add(_horse);
-            context.SaveChanges();
+            Context.Horses.Add(_horse);
+            Context.SaveChanges();
         }
 
         [Fact]
         public async Task ItUpdatesHorse()
         {
             // Arrange
-            await using var context = new TripleDerbyContext(Options);
-            var repository = new TripleDerbyRepository(context);
-
             _horse.Name = "Updated";
             
             // Act
-            await repository.Update(_horse);
+            await Repository.Update(_horse);
 
             // Assert
-            Assert.Contains(context.Horses, x => x.Name == "Updated");
+            Assert.Contains(Context.Horses, x => x.Name == "Updated");
         }
     }
 }
