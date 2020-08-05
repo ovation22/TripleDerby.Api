@@ -7,10 +7,10 @@ using TripleDerby.Infrastructure.Data;
 using TripleDerby.Infrastructure.Data.Repositories;
 using Xunit;
 
-namespace TripleDerby.Infrastructure.Tests.Data.Repositories.EFRepositoryTests
+namespace TripleDerby.Infrastructure.Tests.Data.Repositories.TripleDerbyRepositoryTests
 {
-    [Trait("Category", "EFRepository")]
-    public class GetAll : EFRepositoryTestBase
+    [Trait("Category", "TripleDerbyRepository")]
+    public class GetAll : TripleDerbyRepositoryTestBase
     {
         public GetAll()
         {
@@ -22,14 +22,14 @@ namespace TripleDerby.Infrastructure.Tests.Data.Repositories.EFRepositoryTests
         }
 
         [Fact]
-        public async Task ItReturnsAllHorse()
+        public async Task ItReturnsAllHorseByExpression()
         {
             // Arrange
             await using var context = new TripleDerbyContext(Options);
             var repository = new TripleDerbyRepository(context);
 
             // Act
-            var horses = (List<Horse>) await repository.GetAll<Horse>();
+            var horses = (List<Horse>) await repository.GetAll<Horse>(x => true);
 
             // Assert
             Assert.IsAssignableFrom<IEnumerable<Horse>>(horses);

@@ -9,6 +9,5 @@ namespace TripleDerby.Core.Interfaces.Services
     {
         Task<HorseResult> Get(Guid id);
         Task<IEnumerable<HorsesResult>> GetAll();
-
     }
 }

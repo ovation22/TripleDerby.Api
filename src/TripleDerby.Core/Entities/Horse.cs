@@ -9,5 +9,7 @@ namespace TripleDerby.Core.Entities
         public Guid Id { get; set; }
 
         public string Name { get; set; } = default!;
+
+        public bool IsMale { get; set; }
     }
 }
