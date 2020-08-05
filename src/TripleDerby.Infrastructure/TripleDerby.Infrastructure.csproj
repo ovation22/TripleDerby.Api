@@ -15,4 +15,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TripleDerby.Core\TripleDerby.Core.csproj" />
+  </ItemGroup>
+
 </Project>
