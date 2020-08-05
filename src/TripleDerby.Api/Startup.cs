@@ -1,31 +1,52 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using TripleDerby.Api.Config;
+using TripleDerby.Core.Interfaces.Logging;
+using TripleDerby.Core.Interfaces.Repositories;
+using TripleDerby.Core.Interfaces.Services;
+using TripleDerby.Core.Interfaces.Utilities;
+using TripleDerby.Core.Services;
+using TripleDerby.Infrastructure.Data.Repositories;
+using TripleDerby.Infrastructure.Logging;
+using TripleDerby.Infrastructure.Utilities;
 
 namespace TripleDerby.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IConfiguration Configuration { get; }
+        private readonly IWebHostEnvironment _hostContext;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment hostContext)
         {
             Configuration = configuration;
+            _hostContext = hostContext;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddCorsConfig();
+            services.AddControllersConfig();
+            services.AddDatabaseConfig(Configuration);
+            services.AddSwaggerConfig();
+            services.AddApplicationInsightsTelemetry();
+
+            if (_hostContext.IsProduction())
+            {
+                services.AddHealthCheckConfig(Configuration);
+            }
+
+            services.AddSingleton<ITimeManager, TimeManager>();
+            services.AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
+            services.AddScoped(typeof(ITripleDerbyRepository), typeof(TripleDerbyRepository));
+
+            services.AddCaching(Configuration, _hostContext);
+
+            services.AddScoped<IHorseService, HorseService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +59,10 @@ namespace TripleDerby.Api
 
             app.UseHttpsRedirection();
 
+            app.UseSwaggerConfig();
+            app.UseCorsConfig();
+            app.UseHttpsRedirection();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -46,6 +71,11 @@ namespace TripleDerby.Api
             {
                 endpoints.MapControllers();
             });
+
+            if (_hostContext.IsProduction())
+            {
+                app.UseHealthCheckConfig();
+            }
         }
     }
 }
