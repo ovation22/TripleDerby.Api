@@ -5,7 +5,7 @@ using Xunit;
 
 namespace TripleDerby.Infrastructure.Tests.Data.Repositories.TripleDerbyRepositoryTests
 {
-    [Collection("TripleDerbyRepository GetAll")]
+    [Collection("ContextFixture")]
     [Trait("Category", "TripleDerbyRepository")]
     public class Count : TripleDerbyRepositoryTestBase
     {
@@ -14,7 +14,7 @@ namespace TripleDerby.Infrastructure.Tests.Data.Repositories.TripleDerbyReposito
         }
 
         [Fact]
-        public async Task ItReturnsHorse()
+        public async Task ItReturnsCount()
         {
             // Arrange
             // Act
