@@ -36,6 +36,49 @@ namespace TripleDerby.Core.Services
             return await GetParentHorses(CacheKeys.FeaturedSires, true);
         }
 
+        public async Task<Foal> Breed(Guid userId, Guid damId, Guid sireId)
+        {
+            var horse = new Horse
+            {
+                Name = "TODO",
+                ColorId = 1,
+                LegTypeId = 1,
+                IsMale = true,
+                SireId = sireId,
+                DamId = damId,
+                RaceStarts = 0,
+                RaceWins = 0,
+                RacePlaces = 0,
+                RaceShows = 0,
+                Earnings = 0,
+                IsRetired = false,
+                Parented = 0,
+                OwnerId = userId
+            };
+
+            var speed = new HorseStatistic();
+            var stamina = new HorseStatistic();
+            var agility = new HorseStatistic();
+            var happiness = new HorseStatistic();
+            var durability = new HorseStatistic();
+
+            horse.Statistics.Add(speed);
+            horse.Statistics.Add(stamina);
+            horse.Statistics.Add(agility);
+            horse.Statistics.Add(happiness);
+            horse.Statistics.Add(durability);
+
+            var foal = await _repository.Add(horse);
+
+            return new Foal
+            {
+                Id = horse.Id,
+                Name = foal.Name,
+                ColorId = foal.ColorId,
+                Color = foal.Color.Name
+            };
+        }
+
         public async Task<IEnumerable<ParentHorse>> GetDams()
         {
             return await GetParentHorses(CacheKeys.FeaturedDams, false);
