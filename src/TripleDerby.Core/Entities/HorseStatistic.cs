@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using TripleDerby.Core.Enums;
 
 namespace TripleDerby.Core.Entities
 {
@@ -10,14 +11,12 @@ namespace TripleDerby.Core.Entities
 
         public Guid HorseId { get; set; }
 
-        public Guid StatisticId { get; set; }
-        
-        public Guid OwnerId { get; set; }
-
         public byte Actual { get; set; }
 
         public byte DominantPotential { get; set; }
 
         public byte RecessivePotential { get; set; }
+
+        public virtual Statistic Statistic { get; set; } = default!;
     }
 }

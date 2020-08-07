@@ -13,6 +13,13 @@ namespace TripleDerby.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Horse>()
+                .Property(c => c.Color)
+                .HasConversion<byte>();
+
+            modelBuilder.Entity<HorseStatistic>()
+                .Property(c => c.Statistic)
+                .HasConversion<byte>();
         }
     }
 }
