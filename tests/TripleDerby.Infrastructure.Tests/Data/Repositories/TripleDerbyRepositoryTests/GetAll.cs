@@ -6,6 +6,7 @@ using Xunit;
 
 namespace TripleDerby.Infrastructure.Tests.Data.Repositories.TripleDerbyRepositoryTests
 {
+    [Collection("TripleDerbyRepository GetAll")]
     [Trait("Category", "TripleDerbyRepository")]
     public class GetAll : TripleDerbyRepositoryTestBase
     {
