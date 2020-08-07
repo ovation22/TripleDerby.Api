@@ -36,7 +36,7 @@ namespace TripleDerby.Core.Entities
         
         public Guid OwnerId { get; set; }
 
-        public virtual Collection<HorseStatistic> Statistics { get; set; } = default!;
+        public virtual Collection<HorseStatistic> Statistics { get; set; } = new Collection<HorseStatistic>();
 
         public virtual Color Color { get; set; } = default!;
     }
