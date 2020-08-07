@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.VisualBasic;
+using TripleDerby.Core.Enums;
 
 namespace TripleDerby.Core.Entities
 {
@@ -13,8 +13,6 @@ namespace TripleDerby.Core.Entities
         public string Name { get; set; } = default!;
 
         public bool IsMale { get; set; }
-        
-        public byte ColorId { get; set; }
         
         public byte LegTypeId { get; set; }
         

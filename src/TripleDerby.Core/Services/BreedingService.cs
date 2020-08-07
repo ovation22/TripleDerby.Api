@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using TripleDerby.Core.Cache;
 using TripleDerby.Core.DTOs;
 using TripleDerby.Core.Entities;
+using TripleDerby.Core.Enums;
 using TripleDerby.Core.Interfaces.Caching;
 using TripleDerby.Core.Interfaces.Repositories;
 using TripleDerby.Core.Interfaces.Services;
@@ -41,7 +42,7 @@ namespace TripleDerby.Core.Services
             var horse = new Horse
             {
                 Name = "TODO",
-                ColorId = 1,
+                Color = Color.Bay,
                 LegTypeId = 1,
                 IsMale = true,
                 SireId = sireId,
@@ -56,11 +57,11 @@ namespace TripleDerby.Core.Services
                 OwnerId = userId
             };
 
-            var speed = new HorseStatistic();
-            var stamina = new HorseStatistic();
-            var agility = new HorseStatistic();
-            var happiness = new HorseStatistic();
-            var durability = new HorseStatistic();
+            var speed = new HorseStatistic{ Statistic = Statistic.Speed };
+            var stamina = new HorseStatistic { Statistic = Statistic.Stamina };
+            var agility = new HorseStatistic { Statistic = Statistic.Agility };
+            var happiness = new HorseStatistic { Statistic = Statistic.Happiness };
+            var durability = new HorseStatistic { Statistic = Statistic.Durability };
 
             horse.Statistics.Add(speed);
             horse.Statistics.Add(stamina);
@@ -74,8 +75,8 @@ namespace TripleDerby.Core.Services
             {
                 Id = horse.Id,
                 Name = foal.Name,
-                ColorId = foal.ColorId,
-                Color = foal.Color.Name
+                Color = nameof(foal.Color),
+                ColorId = (byte)foal.Color
             };
         }
 

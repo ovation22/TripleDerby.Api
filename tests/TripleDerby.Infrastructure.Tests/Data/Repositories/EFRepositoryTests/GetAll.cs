@@ -6,6 +6,7 @@ using Xunit;
 
 namespace TripleDerby.Infrastructure.Tests.Data.Repositories.EFRepositoryTests
 {
+    [Collection("ContextFixture")]
     [Trait("Category", "EFRepository")]
     public class GetAll : EFRepositoryTestBase
     {
