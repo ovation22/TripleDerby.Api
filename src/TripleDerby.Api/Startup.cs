@@ -43,6 +43,7 @@ namespace TripleDerby.Api
             }
 
             services.AddSingleton<ITimeManager, TimeManager>();
+            services.AddSingleton<IRandomGenerator, RandomGenerator>();
             services.AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
             services.AddScoped(typeof(ITripleDerbyRepository), typeof(TripleDerbyRepository));
 

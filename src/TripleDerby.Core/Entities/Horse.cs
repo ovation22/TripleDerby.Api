@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using TripleDerby.Core.Enums;
 
 namespace TripleDerby.Core.Entities
 {
@@ -11,6 +11,14 @@ namespace TripleDerby.Core.Entities
         public Guid Id { get; set; }
 
         public string Name { get; set; } = default!;
+
+        public byte ColorId { get; set; }
+
+        public virtual Color Color { get; set; } = default!;
+
+        public byte LegTypeId { get; set; }
+        
+        public virtual LegType LegType { get; set; } = default!;
 
         public bool IsMale { get; set; }
         
@@ -34,9 +42,6 @@ namespace TripleDerby.Core.Entities
         
         public Guid OwnerId { get; set; }
 
-        public virtual Collection<HorseStatistic> Statistics { get; set; } = new Collection<HorseStatistic>();
-
-        public virtual Color Color { get; set; } = default!;
-        public virtual LegType LegType { get; set; } = default!;
+        public virtual ICollection<HorseStatistic> Statistics { get; set; } = new Collection<HorseStatistic>();
     }
 }
