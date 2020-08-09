@@ -43,10 +43,10 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
                 Color = color,
                 Statistics = new Collection<HorseStatistic>
                 {
-                    new HorseStatistic{Statistic = Statistic.Agility},
-                    new HorseStatistic{Statistic = Statistic.Durability},
-                    new HorseStatistic{Statistic = Statistic.Stamina},
-                    new HorseStatistic{Statistic = Statistic.Speed}
+                    new HorseStatistic{StatisticId = StatisticId.Agility},
+                    new HorseStatistic{StatisticId = StatisticId.Durability},
+                    new HorseStatistic{StatisticId = StatisticId.Stamina},
+                    new HorseStatistic{StatisticId = StatisticId.Speed}
                 }
             };
             var sire = new Horse
@@ -55,10 +55,10 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
                 Color = color,
                 Statistics = new Collection<HorseStatistic>
                 {
-                    new HorseStatistic{Statistic = Statistic.Agility},
-                    new HorseStatistic{Statistic = Statistic.Durability},
-                    new HorseStatistic{Statistic = Statistic.Stamina},
-                    new HorseStatistic{Statistic = Statistic.Speed}
+                    new HorseStatistic{StatisticId = StatisticId.Agility},
+                    new HorseStatistic{StatisticId = StatisticId.Durability},
+                    new HorseStatistic{StatisticId = StatisticId.Stamina},
+                    new HorseStatistic{StatisticId = StatisticId.Speed}
                 }
             };
 

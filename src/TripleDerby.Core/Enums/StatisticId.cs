@@ -1,6 +1,6 @@
 ﻿namespace TripleDerby.Core.Enums
 {
-    public enum Statistic
+    public enum StatisticId : byte
     {
         Speed = 1,
         Stamina = 2,

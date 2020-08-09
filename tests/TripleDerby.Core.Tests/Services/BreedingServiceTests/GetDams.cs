@@ -16,7 +16,7 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
         {
             // Arrange
             // Act
-            var horses = await Service.GetSires();
+            var horses = await Service.GetDams();
 
             // Assert
             Assert.NotNull(horses);
@@ -28,7 +28,7 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
         {
             // Arrange
             // Act
-            await Service.GetSires();
+            await Service.GetDams();
 
             // Assert
             Repository.Verify(x => x.GetRandom(It.IsAny<Expression<Func<Horse, bool>>>(), 10), Times.Once());

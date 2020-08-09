@@ -17,6 +17,6 @@ namespace TripleDerby.Core.Entities
 
         public byte RecessivePotential { get; set; }
 
-        public virtual Statistic Statistic { get; set; } = default!;
+        public virtual StatisticId StatisticId { get; set; } = default!;
     }
 }

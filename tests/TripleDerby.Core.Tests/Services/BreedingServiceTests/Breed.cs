@@ -12,15 +12,22 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
     {
         private Horse _newHorse;
         private readonly Guid _userId;
+        private readonly BreedRequest _request;
 
         public Breed()
         {
             _newHorse = new Horse();
             _userId = new Guid("E54F40AB-01A5-4ABB-9376-F196005F7259");
+            _request = new BreedRequest
+            {
+                UserId = _userId,
+                SireId = SireId,
+                DamId = DamId
+            };
 
             Repository.Setup(x => x.Add(It.IsAny<Horse>()))
                 .Callback<Horse>(x => _newHorse = x)
-                .ReturnsAsync(new Horse());
+                .ReturnsAsync(new Horse{ Color = new Color() });
         }
 
         [Fact]
@@ -28,7 +35,7 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
         {
             // Arrange
             // Act
-            var foal = await Service.Breed(_userId, DamId, SireId);
+            var foal = await Service.Breed(_request);
 
             // Assert
             Assert.NotNull(foal);
@@ -40,7 +47,7 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
         {
             // Arrange
             // Act
-            await Service.Breed(_userId, DamId, SireId);
+            await Service.Breed(_request);
 
             // Assert
             Assert.Equal("TODO", _newHorse.Name);

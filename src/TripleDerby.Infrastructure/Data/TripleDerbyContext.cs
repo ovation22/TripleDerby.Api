@@ -17,7 +17,7 @@ namespace TripleDerby.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<HorseStatistic>()
-                .Property(c => c.Statistic)
+                .Property(c => c.StatisticId)
                 .HasConversion<byte>();
         }
     }
