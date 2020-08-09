@@ -17,6 +17,10 @@ namespace TripleDerby.Infrastructure.Data
                 .Property(c => c.Color)
                 .HasConversion<byte>();
 
+            modelBuilder.Entity<Horse>()
+                .Property(c => c.LegType)
+                .HasConversion<byte>();
+
             modelBuilder.Entity<HorseStatistic>()
                 .Property(c => c.Statistic)
                 .HasConversion<byte>();

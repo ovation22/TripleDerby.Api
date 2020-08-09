@@ -14,8 +14,6 @@ namespace TripleDerby.Core.Entities
 
         public bool IsMale { get; set; }
         
-        public byte LegTypeId { get; set; }
-        
         public Guid SireId { get; set; }
         
         public Guid DamId { get; set; }
@@ -39,5 +37,6 @@ namespace TripleDerby.Core.Entities
         public virtual Collection<HorseStatistic> Statistics { get; set; } = new Collection<HorseStatistic>();
 
         public virtual Color Color { get; set; } = default!;
+        public virtual LegType LegType { get; set; } = default!;
     }
 }
