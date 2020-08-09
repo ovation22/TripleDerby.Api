@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TripleDerby.Core.DTOs;
 
@@ -9,6 +8,6 @@ namespace TripleDerby.Core.Interfaces.Services
     {
         Task<IEnumerable<ParentHorse>> GetDams();
         Task<IEnumerable<ParentHorse>> GetSires();
-        Task<Foal> Breed(Guid userId, Guid damId, Guid sireId);
+        Task<Foal> Breed(BreedRequest userId);
     }
 }

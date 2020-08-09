@@ -46,14 +46,15 @@ namespace TripleDerby.Core.Services
             return await GetParentHorses(CacheKeys.FeaturedSires, true);
         }
 
-        public async Task<Foal> Breed(Guid userId, Guid damId, Guid sireId)
+        public async Task<Foal> Breed(BreedRequest request)
         {
-            var dam = await _repository.Get<Horse>(x => x.DamId == damId, y => y.Color, z => z.Statistics);
-            var sire = await _repository.Get<Horse>(x => x.SireId == sireId, y => y.Color, z => z.Statistics);
+            var dam = await _repository.Get<Horse>(x => x.Id == request.DamId, y => y.Color, z => z.Statistics);
+            var sire = await _repository.Get<Horse>(x => x.Id == request.SireId, y => y.Color, z => z.Statistics);
 
             var color = await GetRandomColor(sire.Color.IsSpecial, dam.Color.IsSpecial, true);
             var isMale = GetRandomGender();
             var legType = await GetRandomLegType();
+            var statistics = GenerateHorseStatistics(sire, dam);
 
             var horse = new Horse
             {
@@ -61,19 +62,18 @@ namespace TripleDerby.Core.Services
                 ColorId = color.Id,
                 LegTypeId = legType.Id,
                 IsMale = isMale,
-                SireId = sireId,
-                DamId = damId,
+                SireId = request.SireId,
+                DamId = request.DamId,
                 RaceStarts = 0,
                 RaceWins = 0,
-                RacePlaces = 0,
-                RaceShows = 0,
+                RacePlace = 0,
+                RaceShow = 0,
                 Earnings = 0,
                 IsRetired = false,
                 Parented = 0,
-                OwnerId = userId
+                OwnerId = request.UserId,
+                Statistics = statistics
             };
-
-            horse.Statistics.ToList().AddRange(GenerateHorseStatistics(sire, dam));
             
             var foal = await _repository.Add(horse);
 
@@ -81,8 +81,8 @@ namespace TripleDerby.Core.Services
             {
                 Id = horse.Id,
                 Name = foal.Name,
-                Color = nameof(foal.Color),
-                ColorId = 1
+                Color = foal.Color.Name,
+                ColorId = foal.ColorId
             };
         }
 
@@ -136,7 +136,7 @@ namespace TripleDerby.Core.Services
         {
             List<HorseStatistic> foalStatistics = new List<HorseStatistic>();
 
-            foreach (var statistic in Enum.GetValues(typeof(Statistic)).Cast<Statistic>().Where(x => x != Statistic.Happiness))
+            foreach (var statistic in Enum.GetValues(typeof(StatisticId)).Cast<StatisticId>().Where(x => x != StatisticId.Happiness))
             {
                 int punnettQuadrant = _randomGenerator.Next(1, 5);
                 int whichGeneToPick = _randomGenerator.Next(1, 3);
@@ -144,8 +144,8 @@ namespace TripleDerby.Core.Services
                 byte dominantPotential;
                 byte recessivePotential;
 
-                HorseStatistic sireStatistic = sire.Statistics.ToList().Single(x => x.Statistic == statistic);
-                HorseStatistic damStatistic = dam.Statistics.ToList().Single(x => x.Statistic == statistic);
+                HorseStatistic sireStatistic = sire.Statistics.ToList().Single(x => x.StatisticId == statistic);
+                HorseStatistic damStatistic = dam.Statistics.ToList().Single(x => x.StatisticId == statistic);
 
                 switch (punnettQuadrant)
                 {
@@ -189,7 +189,7 @@ namespace TripleDerby.Core.Services
 
                 var foalStatistic = new HorseStatistic
                 {
-                    Statistic = sireStatistic.Statistic,
+                    StatisticId = sireStatistic.StatisticId,
                     Actual = actual,
                     DominantPotential = dominantPotential,
                     RecessivePotential = recessivePotential

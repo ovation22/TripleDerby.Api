@@ -22,23 +22,23 @@ namespace TripleDerby.Core.Entities
 
         public bool IsMale { get; set; }
         
-        public Guid SireId { get; set; }
+        public Guid? SireId { get; set; }
         
-        public Guid DamId { get; set; }
+        public Guid? DamId { get; set; }
         
         public short RaceStarts { get; set; }
         
         public short RaceWins { get; set; }
         
-        public short RacePlaces { get; set; }
+        public short RacePlace { get; set; }
         
-        public short RaceShows { get; set; }
+        public short RaceShow { get; set; }
         
         public int Earnings { get; set; }
         
         public bool IsRetired { get; set; }
         
-        public int Parented { get; set; }
+        public short Parented { get; set; }
         
         public Guid OwnerId { get; set; }
 

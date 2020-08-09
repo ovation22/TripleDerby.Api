@@ -4,47 +4,40 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
-namespace TripleDerby.Api.Tests.Controllers.HorsesControllerTests
+namespace TripleDerby.Api.Tests.Controllers.BreedingControllerTests
 {
-    public class Get : HorsesControllerTestBase
+    public class GetSires : BreedingControllerTestBase
     {
-        private readonly Guid _id;
-
-        public Get()
-        {
-            _id = new Guid("170E1003-5346-4E57-8721-FBBDFBC28EF6");
-        }
-
         [Fact]
         public async Task ItReturnsOkObjectResult()
         {
             // Arrange
             // Act
-            var result = await Controller.Get(_id);
+            var result = await Controller.GetSires();
 
             // Assert
             Assert.IsType<OkObjectResult>(result);
         }
 
         [Fact]
-        public async Task ItGetsHorse()
+        public async Task ItGetsSires()
         {
             // Arrange
             // Act
-            await Controller.Get(_id);
+            await Controller.GetSires();
 
             // Assert
-            HorseService.Verify(x => x.Get(_id), Times.Once());
+            BreedingService.Verify(x => x.GetSires(), Times.Once());
         }
 
         [Fact]
         public async Task GivenException_ThenBadRequestResult()
         {
             // Arrange
-            HorseService.Setup(x => x.Get(_id)).Throws(new Exception());
+            BreedingService.Setup(x => x.GetSires()).Throws(new Exception());
 
             // Act
-            var result = await Controller.Get(_id);
+            var result = await Controller.GetSires();
 
             // Assert
             Assert.IsAssignableFrom<BadRequestObjectResult>(result);
@@ -55,10 +48,10 @@ namespace TripleDerby.Api.Tests.Controllers.HorsesControllerTests
         {
             // Arrange
             var ex = new Exception();
-            HorseService.Setup(x => x.Get(_id)).Throws(ex);
+            BreedingService.Setup(x => x.GetSires()).Throws(ex);
 
             // Act
-            await Controller.Get(_id);
+            await Controller.GetSires();
 
             // Assert
             Logger.Verify(x => x.LogError(ex, ex.Message), Times.Once());

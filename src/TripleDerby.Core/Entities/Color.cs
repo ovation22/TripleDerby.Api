@@ -11,7 +11,7 @@ namespace TripleDerby.Core.Entities
 
         public string Description { get; set; } = default!;
 
-        public byte Weight { get; set; }
+        public int Weight { get; set; }
 
         public bool IsSpecial { get; set; }
     }
