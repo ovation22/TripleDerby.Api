@@ -23,7 +23,7 @@ namespace TripleDerby.Infrastructure.Data.Repositories
 
             return await dbSet.CountAsync();
         }
-
+        
         public async Task<IEnumerable<T>> GetAll<T>(Expression<Func<T, bool>> expression) where T : class
         {
             var dbSet = _context.Set<T>();

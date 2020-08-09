@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\TripleDerby.Core\TripleDerby.Core.csproj" />
+    <ProjectReference Include="..\..\src\TripleDerby.Infrastructure\TripleDerby.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
