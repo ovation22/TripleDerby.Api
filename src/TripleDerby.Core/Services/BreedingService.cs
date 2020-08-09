@@ -32,6 +32,11 @@ namespace TripleDerby.Core.Services
             _cacheExpirationMinutes = cacheOptions.Value.DefaultExpirationMinutes;
         }
 
+        public async Task<IEnumerable<ParentHorse>> GetDams()
+        {
+            return await GetParentHorses(CacheKeys.FeaturedDams, false);
+        }
+
         public async Task<IEnumerable<ParentHorse>> GetSires()
         {
             return await GetParentHorses(CacheKeys.FeaturedSires, true);
@@ -43,7 +48,7 @@ namespace TripleDerby.Core.Services
             {
                 Name = "TODO",
                 Color = Color.Bay,
-                LegTypeId = 1,
+                LegType = LegType.FrontRunner,
                 IsMale = true,
                 SireId = sireId,
                 DamId = damId,
@@ -80,11 +85,6 @@ namespace TripleDerby.Core.Services
             };
         }
 
-        public async Task<IEnumerable<ParentHorse>> GetDams()
-        {
-            return await GetParentHorses(CacheKeys.FeaturedDams, false);
-        }
-
         private async Task<IEnumerable<ParentHorse>> GetParentHorses(string cacheKey, bool isMale)
         {
             IEnumerable<ParentHorse> results;
@@ -115,7 +115,7 @@ namespace TripleDerby.Core.Services
 
         private async Task<IEnumerable<ParentHorse>> GetRandomHorses(bool isMale)
         {
-            var speakers = await _repository.GetRandom<Horse>(x => x.IsMale == isMale, 10);
+            var speakers = await _repository.GetRandom<Horse>(x => x.IsMale == isMale && x.IsRetired, 10);
 
             var results = speakers.Select(x => new ParentHorse
             {
