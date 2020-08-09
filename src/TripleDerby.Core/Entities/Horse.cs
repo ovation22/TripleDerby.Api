@@ -13,6 +13,8 @@ namespace TripleDerby.Core.Entities
         public string Name { get; set; } = default!;
 
         public bool IsMale { get; set; }
+
+        public byte ColorId { get; set; }
         
         public Guid SireId { get; set; }
         

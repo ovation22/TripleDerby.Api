@@ -47,8 +47,8 @@ namespace TripleDerby.Core.Services
             var horse = new Horse
             {
                 Name = "TODO",
-                Color = Color.Bay,
-                LegType = LegType.FrontRunner,
+                ColorId = 1,
+                LegTypeId = 1,
                 IsMale = true,
                 SireId = sireId,
                 DamId = damId,
@@ -81,8 +81,13 @@ namespace TripleDerby.Core.Services
                 Id = horse.Id,
                 Name = foal.Name,
                 Color = nameof(foal.Color),
-                ColorId = (byte)foal.Color
+                ColorId = 1
             };
+        }
+
+        public async Task<IEnumerable<ParentHorse>> GetDams()
+        {
+            return await GetParentHorses(CacheKeys.FeaturedDams, false);
         }
 
         private async Task<IEnumerable<ParentHorse>> GetParentHorses(string cacheKey, bool isMale)
