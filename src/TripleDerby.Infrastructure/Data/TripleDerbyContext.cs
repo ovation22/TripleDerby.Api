@@ -11,13 +11,16 @@ namespace TripleDerby.Infrastructure.Data
 
         public virtual DbSet<Color> Colors { get; set; } = null!;
         public virtual DbSet<Horse> Horses { get; set; } = null!;
-        public virtual DbSet<LegType> LegTypes { get; set; } = null!;
         public virtual DbSet<HorseStatistic> HorseStatistics { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<HorseStatistic>()
                 .Property(c => c.StatisticId)
+                .HasConversion<byte>();
+
+            modelBuilder.Entity<Horse>()
+                .Property(c => c.LegTypeId)
                 .HasConversion<byte>();
         }
     }

@@ -51,16 +51,16 @@ namespace TripleDerby.Core.Services
             var dam = await _repository.Get<Horse>(x => x.Id == request.DamId, y => y.Color, z => z.Statistics);
             var sire = await _repository.Get<Horse>(x => x.Id == request.SireId, y => y.Color, z => z.Statistics);
 
-            var color = await GetRandomColor(sire.Color.IsSpecial, dam.Color.IsSpecial, true);
             var isMale = GetRandomGender();
-            var legType = await GetRandomLegType();
-            var statistics = GenerateHorseStatistics(sire, dam);
+            var legTypeId = GetRandomLegType();
+            var color = await GetRandomColor(sire.Color.IsSpecial, dam.Color.IsSpecial, true);
+            var statistics = GenerateHorseStatistics(sire.Statistics.ToList(), dam.Statistics.ToList());
 
             var horse = new Horse
             {
                 Name = "TODO",
                 ColorId = color.Id,
-                LegTypeId = legType.Id,
+                LegTypeId = legTypeId,
                 IsMale = isMale,
                 SireId = request.SireId,
                 DamId = request.DamId,
@@ -86,7 +86,20 @@ namespace TripleDerby.Core.Services
             };
         }
 
-        public async Task<Color> GetRandomColor( bool isSireSpecial, bool isDamSpecial, bool includeSpecialColors)
+        public bool GetRandomGender()
+        {
+            return _randomGenerator.Next(1, 3) > 1;
+        }
+
+        public LegTypeId GetRandomLegType()
+        {
+            var legTypes = Enum.GetValues(typeof(LegTypeId)).Cast<LegTypeId>().ToList();
+            var random = _randomGenerator.Next(1, legTypes.Count + 1);
+
+            return legTypes.Find(legType => (LegTypeId)random == legType);
+        }
+
+        public async Task<Color> GetRandomColor(bool isSireSpecial, bool isDamSpecial, bool includeSpecialColors)
         {
             var multiplier = 1;
 
@@ -119,86 +132,79 @@ namespace TripleDerby.Core.Services
             return sortedColors.Take(1).SingleOrDefault();
         }
 
-        public bool GetRandomGender()
-        {
-            return _randomGenerator.Next(1, 3) > 1;
-        }
-
-        public async Task<LegType> GetRandomLegType()
-        {
-            var legTypes = (List<LegType>) await _repository.GetAll<LegType>();
-            IEnumerable<LegType> sortedLegTypes = legTypes.OrderBy(x => _randomGenerator.Next() * x.Weight);
-
-            return sortedLegTypes.Take(1).SingleOrDefault();
-        }
-
-        public List<HorseStatistic> GenerateHorseStatistics(Horse sire, Horse dam)
+        public List<HorseStatistic> GenerateHorseStatistics(ICollection<HorseStatistic> sireStats, ICollection<HorseStatistic> damStats)
         {
             List<HorseStatistic> foalStatistics = new List<HorseStatistic>();
 
             foreach (var statistic in Enum.GetValues(typeof(StatisticId)).Cast<StatisticId>().Where(x => x != StatisticId.Happiness))
             {
-                int punnettQuadrant = _randomGenerator.Next(1, 5);
-                int whichGeneToPick = _randomGenerator.Next(1, 3);
-
-                byte dominantPotential;
-                byte recessivePotential;
-
-                HorseStatistic sireStatistic = sire.Statistics.ToList().Single(x => x.StatisticId == statistic);
-                HorseStatistic damStatistic = dam.Statistics.ToList().Single(x => x.StatisticId == statistic);
-
-                switch (punnettQuadrant)
-                {
-                    case 1:
-                        if (whichGeneToPick == 1)
-                        {
-                            dominantPotential = sireStatistic.DominantPotential;
-                            recessivePotential = damStatistic.RecessivePotential;
-                        }
-                        else
-                        {
-                            dominantPotential = damStatistic.DominantPotential;
-                            recessivePotential = sireStatistic.RecessivePotential;
-                        }
-                        break;
-                    case 2:
-                        dominantPotential = sireStatistic.DominantPotential;
-                        recessivePotential = damStatistic.RecessivePotential;
-                        break;
-                    case 3:
-                        dominantPotential = damStatistic.DominantPotential;
-                        recessivePotential = sireStatistic.RecessivePotential;
-                        break;
-                    default:  //case 4
-                        if (whichGeneToPick == 1)
-                        {
-                            dominantPotential = sireStatistic.DominantPotential;
-                            recessivePotential = damStatistic.RecessivePotential;
-                        }
-                        else
-                        {
-                            dominantPotential = damStatistic.DominantPotential;
-                            recessivePotential = sireStatistic.RecessivePotential;
-                        }
-                        break;
-                }
-
-                dominantPotential = MutatePotentialGene(dominantPotential);
-                recessivePotential = MutatePotentialGene(recessivePotential);
-                byte actual = (byte) _randomGenerator.Next(dominantPotential / 3, dominantPotential / 2);
-
-                var foalStatistic = new HorseStatistic
-                {
-                    StatisticId = sireStatistic.StatisticId,
-                    Actual = actual,
-                    DominantPotential = dominantPotential,
-                    RecessivePotential = recessivePotential
-                };
-
-                foalStatistics.Add(foalStatistic);
+                foalStatistics.Add(GenerateHorseStatistic(sireStats, damStats, statistic));
             }
 
             return foalStatistics;
+        }
+
+        private HorseStatistic GenerateHorseStatistic(IEnumerable<HorseStatistic> sireStats, IEnumerable<HorseStatistic> damStats, StatisticId statistic)
+        {
+            int punnettQuadrant = _randomGenerator.Next(1, 5);
+            int whichGeneToPick = _randomGenerator.Next(1, 3);
+
+            byte dominantPotential;
+            byte recessivePotential;
+
+            HorseStatistic sireStatistic = sireStats.Single(x => x.StatisticId == statistic);
+            HorseStatistic damStatistic = damStats.Single(x => x.StatisticId == statistic);
+
+            switch (punnettQuadrant)
+            {
+                case 1:
+                    if (whichGeneToPick == 1)
+                    {
+                        dominantPotential = sireStatistic.DominantPotential;
+                        recessivePotential = damStatistic.RecessivePotential;
+                    }
+                    else
+                    {
+                        dominantPotential = damStatistic.DominantPotential;
+                        recessivePotential = sireStatistic.RecessivePotential;
+                    }
+
+                    break;
+                case 2:
+                    dominantPotential = sireStatistic.DominantPotential;
+                    recessivePotential = damStatistic.RecessivePotential;
+                    break;
+                case 3:
+                    dominantPotential = damStatistic.DominantPotential;
+                    recessivePotential = sireStatistic.RecessivePotential;
+                    break;
+                default: //case 4
+                    if (whichGeneToPick == 1)
+                    {
+                        dominantPotential = sireStatistic.DominantPotential;
+                        recessivePotential = damStatistic.RecessivePotential;
+                    }
+                    else
+                    {
+                        dominantPotential = damStatistic.DominantPotential;
+                        recessivePotential = sireStatistic.RecessivePotential;
+                    }
+
+                    break;
+            }
+
+            dominantPotential = MutatePotentialGene(dominantPotential);
+            recessivePotential = MutatePotentialGene(recessivePotential);
+            byte actual = (byte) _randomGenerator.Next(dominantPotential / 3, dominantPotential / 2);
+
+            var foalStatistic = new HorseStatistic
+            {
+                StatisticId = sireStatistic.StatisticId,
+                Actual = actual,
+                DominantPotential = dominantPotential,
+                RecessivePotential = recessivePotential
+            };
+            return foalStatistic;
         }
 
         public byte MutatePotentialGene(byte potential)

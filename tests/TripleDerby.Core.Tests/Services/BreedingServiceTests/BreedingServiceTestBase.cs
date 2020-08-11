@@ -36,7 +36,7 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
             DamId = new Guid("7B48977C-754D-4463-B811-66DFCF5B4487");
             SireId = new Guid("FF55C438-DA12-48BC-A9D2-A6924335C8E6");
 
-            var color = new Color { Id = 1, IsSpecial = false };
+            var color = new Color { Id = 1, IsSpecial = false, Weight = 1 };
             var dam = new Horse
             {
                 Id = DamId,
@@ -64,9 +64,6 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
 
             Repository.Setup(x => x.GetAll<Color>())
                 .ReturnsAsync(new List<Color> { color });
-
-            Repository.Setup(x => x.GetAll<LegType>())
-                .ReturnsAsync(new List<LegType> { new LegType() });
 
             Repository.SetupSequence(x => x.Get(It.IsAny<Expression<Func<Horse, bool>>>(), It.IsAny<Expression<Func<Horse, object>>[]>()))
                 .ReturnsAsync(dam)
