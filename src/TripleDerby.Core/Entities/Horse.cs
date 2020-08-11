@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using TripleDerby.Core.Enums;
 
 namespace TripleDerby.Core.Entities
 {
@@ -16,10 +17,8 @@ namespace TripleDerby.Core.Entities
 
         public virtual Color Color { get; set; } = default!;
 
-        public byte LegTypeId { get; set; }
+        public LegTypeId LegTypeId { get; set; }
         
-        public virtual LegType LegType { get; set; } = default!;
-
         public bool IsMale { get; set; }
         
         public Guid? SireId { get; set; }
