@@ -116,18 +116,11 @@ namespace TripleDerby.Core.Services
                 multiplier = 50;
             }
 
-            List<Color> colors = new List<Color>();
+            var colors = (await _repository.GetAll<Color>()).ToList();
 
-            if (includeSpecialColors)
-            {
-                colors.AddRange(await _repository.GetAll<Color>());
-            }
-            else
-            {
-                colors.AddRange(await _repository.GetAll<Color>(x => x.IsSpecial == false));
-            }
-
-            IEnumerable<Color> sortedColors = colors.OrderBy(x => _randomGenerator.Next(colors.Count * (x.IsSpecial ? x.Weight / multiplier : x.Weight)));
+            IEnumerable<Color> sortedColors = colors
+                .Where(x => includeSpecialColors || x.IsSpecial == false)
+                .OrderBy(x => _randomGenerator.Next(colors.Count * (x.IsSpecial ? x.Weight / multiplier : x.Weight)));
 
             return sortedColors.Take(1).SingleOrDefault();
         }
