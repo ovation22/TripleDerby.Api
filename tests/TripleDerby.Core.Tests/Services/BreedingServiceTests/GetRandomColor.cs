@@ -77,9 +77,10 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
                 .Callback<int>(x => random = x);
 
             // Act
-            await Service.GetRandomColor(isSireSpecial, isDamSpecial, includeSpecialColors);
+            var color = await Service.GetRandomColor(isSireSpecial, isDamSpecial, includeSpecialColors);
 
             // Assert
+            Assert.False(color.IsSpecial);
             Assert.Equal(_colors.Count() * _colors.Last(x => !x.IsSpecial).Weight, random);
         }
 
@@ -99,7 +100,7 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
             await Service.GetRandomColor(isSireSpecial, isDamSpecial, includeSpecialColors);
 
             // Assert
-            Assert.Equal(_colors.Count() * (_colors.Last(x => x.IsSpecial).Weight / multiplier), random);
+            Assert.Equal(_colors.Count() * (_colors.Last().Weight / multiplier), random);
         }
 
         [Fact]
@@ -118,7 +119,7 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
             await Service.GetRandomColor(isSireSpecial, isDamSpecial, includeSpecialColors);
 
             // Assert
-            Assert.Equal(_colors.Count() * (_colors.Last(x => x.IsSpecial).Weight / multiplier), random);
+            Assert.Equal(_colors.Count() * (_colors.Last().Weight / multiplier), random);
         }
 
         [Fact]
@@ -137,7 +138,7 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
             await Service.GetRandomColor(isSireSpecial, isDamSpecial, includeSpecialColors);
 
             // Assert
-            Assert.Equal(_colors.Count() * (_colors.Last(x => x.IsSpecial).Weight / multiplier), random);
+            Assert.Equal(_colors.Count() * (_colors.Last().Weight / multiplier), random);
         }
     }
 }
