@@ -5,6 +5,11 @@
 # TripleDerby.Api
 TripleDerby Api
 
+If you're looking for the front-end UI, check out the [TripleDerby.UI](https://github.com/ovation22/TripleDerby.UI) repository.
+
+## Give a Star! :star:
+If you like the project, please consider giving it a star!
+
 ## Contributing
 Any and all are welcome to contribute to this project.
 Please read our [Contributing Guidelines](/.github/CONTRIBUTING.md)
