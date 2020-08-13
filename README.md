@@ -3,7 +3,7 @@
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/ovation22/TripleDerby.Api/blob/master/LICENSE)
 
 # TripleDerby.Api
-TripleDerby Api
+.NET Core Api back-end for TripleDerby.com.
 
 If you're looking for the front-end UI, check out the [TripleDerby.UI](https://github.com/ovation22/TripleDerby.UI) repository.
 
