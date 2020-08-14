@@ -16,6 +16,8 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
 {
     public class BreedingServiceTestBase
     {
+        protected Horse Dam;
+        protected Horse Sire;
         protected readonly Guid DamId;
         protected readonly Guid SireId;
         protected internal BreedingService Service;
@@ -37,7 +39,7 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
             SireId = new Guid("FF55C438-DA12-48BC-A9D2-A6924335C8E6");
 
             var color = new Color { Id = 1, IsSpecial = false, Weight = 1 };
-            var dam = new Horse
+            Dam = new Horse
             {
                 Id = DamId,
                 Color = color,
@@ -49,7 +51,7 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
                     new HorseStatistic{StatisticId = StatisticId.Speed}
                 }
             };
-            var sire = new Horse
+            Sire = new Horse
             {
                 Id = SireId,
                 Color = color,
@@ -66,8 +68,8 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
                 .ReturnsAsync(new List<Color> { color });
 
             Repository.SetupSequence(x => x.Get(It.IsAny<Expression<Func<Horse, bool>>>(), It.IsAny<Expression<Func<Horse, object>>[]>()))
-                .ReturnsAsync(dam)
-                .ReturnsAsync(sire);
+                .ReturnsAsync(Dam)
+                .ReturnsAsync(Sire);
 
             Service = new BreedingService(Cache.Object, Repository.Object, RandomGenerator.Object, CacheOptions.Object);
         }

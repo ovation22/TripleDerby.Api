@@ -74,6 +74,9 @@ namespace TripleDerby.Core.Services
                 OwnerId = request.UserId,
                 Statistics = statistics
             };
+
+            dam.Parented += 1;
+            sire.Parented += 1;
             
             var foal = await _repository.Add(horse);
 

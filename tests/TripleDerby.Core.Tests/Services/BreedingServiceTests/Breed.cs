@@ -43,6 +43,28 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
         }
 
         [Fact]
+        public async Task ItIncreasesDamParented()
+        {
+            // Arrange
+            // Act
+            await Service.Breed(_request);
+
+            // Assert
+            Assert.Equal(1, Dam.Parented);
+        }
+
+        [Fact]
+        public async Task ItIncreasesSireParented()
+        {
+            // Arrange
+            // Act
+            await Service.Breed(_request);
+
+            // Assert
+            Assert.Equal(1, Sire.Parented);
+        }
+
+        [Fact]
         public async Task ItSetsHorseName()
         {
             // Arrange
