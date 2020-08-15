@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Moq;
 using TripleDerby.Core.DTOs;
-using TripleDerby.Core.Entities;
+using TripleDerby.Core.Specifications;
 using Xunit;
 
 namespace TripleDerby.Core.Tests.Services.HorseServiceTests
@@ -14,7 +14,7 @@ namespace TripleDerby.Core.Tests.Services.HorseServiceTests
         {
             // Arrange
             // Act
-            var horses = await Service.GetAll();
+            var horses = await Service.GetAll(0, 1);
 
             // Assert
             Assert.NotNull(horses);
@@ -26,10 +26,10 @@ namespace TripleDerby.Core.Tests.Services.HorseServiceTests
         {
             // Arrange
             // Act
-            await Service.GetAll();
+            await Service.GetAll(0, 1);
 
             // Assert
-            Repository.Verify(x => x.GetAll<Horse>(), Times.Once());
+            Repository.Verify(x => x.List(It.IsAny<HorsesPaginatedSpecification>()), Times.Once());
         }
     }
 }

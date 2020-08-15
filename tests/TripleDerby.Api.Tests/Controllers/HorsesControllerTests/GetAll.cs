@@ -27,14 +27,14 @@ namespace TripleDerby.Api.Tests.Controllers.HorsesControllerTests
             await Controller.GetAll();
 
             // Assert
-            HorseService.Verify(x => x.GetAll(), Times.Once());
+            HorseService.Verify(x => x.GetAll(It.IsAny<int>(), It.IsAny<int>()), Times.Once());
         }
 
         [Fact]
         public async Task GivenException_ThenBadRequestResult()
         {
             // Arrange
-            HorseService.Setup(x => x.GetAll()).Throws(new Exception());
+            HorseService.Setup(x => x.GetAll(It.IsAny<int>(), It.IsAny<int>())).Throws(new Exception());
 
             // Act
             var result = await Controller.GetAll();
@@ -48,7 +48,7 @@ namespace TripleDerby.Api.Tests.Controllers.HorsesControllerTests
         {
             // Arrange
             var ex = new Exception();
-            HorseService.Setup(x => x.GetAll()).Throws(ex);
+            HorseService.Setup(x => x.GetAll(It.IsAny<int>(), It.IsAny<int>())).Throws(ex);
 
             // Act
             await Controller.GetAll();

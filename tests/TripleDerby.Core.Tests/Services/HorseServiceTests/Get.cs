@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Moq;
 using TripleDerby.Core.DTOs;
 using TripleDerby.Core.Entities;
+using TripleDerby.Core.Specifications;
 using Xunit;
 
 namespace TripleDerby.Core.Tests.Services.HorseServiceTests
@@ -21,7 +21,7 @@ namespace TripleDerby.Core.Tests.Services.HorseServiceTests
                     Id = _id
                 };
 
-            Repository.Setup(x => x.Get(It.IsAny<Expression<Func<Horse, bool>>>())).ReturnsAsync(_horse);
+            Repository.Setup(x => x.Get(It.IsAny<HorseSpecification>())).ReturnsAsync(_horse);
         }
 
         [Fact]

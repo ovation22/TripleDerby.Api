@@ -8,6 +8,6 @@ namespace TripleDerby.Core.Interfaces.Services
     public interface IHorseService
     {
         Task<HorseResult> Get(Guid id);
-        Task<IEnumerable<HorsesResult>> GetAll();
+        Task<IEnumerable<HorsesResult>> GetAll(int pageIndex, int itemsPage);
     }
 }
