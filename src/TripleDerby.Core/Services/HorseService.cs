@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TripleDerby.Core.DTOs;
-using TripleDerby.Core.Entities;
 using TripleDerby.Core.Interfaces.Repositories;
 using TripleDerby.Core.Interfaces.Services;
+using TripleDerby.Core.Specifications;
 
 namespace TripleDerby.Core.Services
 {
@@ -22,7 +22,7 @@ namespace TripleDerby.Core.Services
 
         public async Task<HorseResult> Get(Guid id)
         {
-            var horse = await _repository.Get<Horse>(x => x.Id == id);
+            var horse = await _repository.Get(new HorseSpecification(id));
 
             return new HorseResult
             {
@@ -31,9 +31,11 @@ namespace TripleDerby.Core.Services
             };
         }
 
-        public async Task<IEnumerable<HorsesResult>> GetAll()
+        public async Task<IEnumerable<HorsesResult>> GetAll(int pageIndex, int itemsPage)
         {
-            var horses = await _repository.GetAll<Horse>();
+            var paginatedSpecification = new HorsesPaginatedSpecification(itemsPage * pageIndex, itemsPage);
+
+            var horses = await _repository.List(paginatedSpecification);
 
             return horses.Select(x => new HorsesResult
             {

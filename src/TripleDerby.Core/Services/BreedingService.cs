@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Ardalis.Specification;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using TripleDerby.Core.Cache;
@@ -13,6 +14,7 @@ using TripleDerby.Core.Interfaces.Caching;
 using TripleDerby.Core.Interfaces.Repositories;
 using TripleDerby.Core.Interfaces.Services;
 using TripleDerby.Core.Interfaces.Utilities;
+using TripleDerby.Core.Specifications;
 
 namespace TripleDerby.Core.Services
 {
@@ -48,13 +50,13 @@ namespace TripleDerby.Core.Services
 
         public async Task<Foal> Breed(BreedRequest request)
         {
-            var dam = await _repository.Get<Horse>(x => x.Id == request.DamId, y => y.Color, z => z.Statistics);
-            var sire = await _repository.Get<Horse>(x => x.Id == request.SireId, y => y.Color, z => z.Statistics);
+            var dam = await _repository.Get(new ParentHorseSpecification(request.DamId));
+            var sire = await _repository.Get(new ParentHorseSpecification(request.SireId));
 
             var isMale = GetRandomGender();
             var legTypeId = GetRandomLegType();
             var color = await GetRandomColor(sire.Color.IsSpecial, dam.Color.IsSpecial, true);
-            var statistics = GenerateHorseStatistics(sire.Statistics.ToList(), dam.Statistics.ToList());
+            var statistics = GenerateHorseStatistics(sire.Statistics, dam.Statistics);
 
             var horse = new Horse
             {
@@ -132,11 +134,13 @@ namespace TripleDerby.Core.Services
         {
             List<HorseStatistic> foalStatistics = new List<HorseStatistic>();
 
+            foalStatistics.Add(new HorseStatistic { StatisticId = StatisticId.Happiness });
+
             foreach (var statistic in Enum.GetValues(typeof(StatisticId)).Cast<StatisticId>().Where(x => x != StatisticId.Happiness))
             {
                 foalStatistics.Add(GenerateHorseStatistic(sireStats, damStats, statistic));
             }
-
+            
             return foalStatistics;
         }
 
@@ -239,7 +243,8 @@ namespace TripleDerby.Core.Services
 
             if (string.IsNullOrEmpty(cacheValue))
             {
-                results = (await GetRandomHorses(isMale)).ToList();
+                results = (await GetRandomHorses(new RandomRetiredHorseSpecification(isMale))).ToList();
+
                 await SetCache(cacheKey, results);
             }
             else
@@ -260,9 +265,9 @@ namespace TripleDerby.Core.Services
             await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(results), options);
         }
 
-        private async Task<IEnumerable<ParentHorse>> GetRandomHorses(bool isMale)
+        private async Task<IEnumerable<ParentHorse>> GetRandomHorses(ISpecification<Horse> spec)
         {
-            var horses = await _repository.GetRandom<Horse>(x => x.IsMale == isMale && x.IsRetired, 10);
+            var horses = await _repository.List(spec);
 
             var results = horses.Select(x => new ParentHorse
             {

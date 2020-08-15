@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq.Expressions;
+using Ardalis.Specification;
 using Microsoft.Extensions.Options;
 using Moq;
 using TripleDerby.Core.Cache;
@@ -11,6 +11,7 @@ using TripleDerby.Core.Interfaces.Caching;
 using TripleDerby.Core.Interfaces.Repositories;
 using TripleDerby.Core.Interfaces.Utilities;
 using TripleDerby.Core.Services;
+using TripleDerby.Core.Specifications;
 
 namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
 {
@@ -67,9 +68,13 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
             Repository.Setup(x => x.GetAll<Color>())
                 .ReturnsAsync(new List<Color> { color });
 
-            Repository.SetupSequence(x => x.Get(It.IsAny<Expression<Func<Horse, bool>>>(), It.IsAny<Expression<Func<Horse, object>>[]>()))
+            Repository.SetupSequence(x => x.Get(It.IsAny<ParentHorseSpecification>()))
                 .ReturnsAsync(Dam)
                 .ReturnsAsync(Sire);
+
+            Repository.SetupSequence(x => x.List(It.IsAny<ISpecification<Horse>>()))
+                .ReturnsAsync(new List<Horse>{ Dam })
+                .ReturnsAsync(new List<Horse> { Sire });
 
             Service = new BreedingService(Cache.Object, Repository.Object, RandomGenerator.Object, CacheOptions.Object);
         }

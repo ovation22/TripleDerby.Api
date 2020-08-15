@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using TripleDerby.Core.Entities;
+using TripleDerby.Core.Specifications;
 using Xunit;
 
 namespace TripleDerby.Infrastructure.Tests.Data.Repositories.EFRepositoryTests
@@ -24,7 +25,7 @@ namespace TripleDerby.Infrastructure.Tests.Data.Repositories.EFRepositoryTests
         {
             // Arrange
             // Act
-            var horse = await Repository.Get<Horse>(x => x.Id == _id);
+            var horse = await Repository.Get(new HorseSpecification(_id));
 
             // Assert
             Assert.IsAssignableFrom<Horse>(horse);
