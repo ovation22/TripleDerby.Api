@@ -27,7 +27,7 @@ namespace TripleDerby.Api.Controllers
 
         // GET: api/Breeding/Dams
         [HttpGet("Dams")]
-        [ProducesResponseType(typeof(IEnumerable<HorsesResult>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<ParentHorse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> GetDams()
@@ -48,7 +48,7 @@ namespace TripleDerby.Api.Controllers
 
         // GET: api/Breeding/Sires
         [HttpGet("Sires")]
-        [ProducesResponseType(typeof(IEnumerable<HorsesResult>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<ParentHorse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> GetSires()

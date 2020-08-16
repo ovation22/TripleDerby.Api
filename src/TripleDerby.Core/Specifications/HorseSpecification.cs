@@ -9,6 +9,12 @@ namespace TripleDerby.Core.Specifications
         public HorseSpecification(Guid id)
         {
             Query.Where(x => x.Id == id);
+
+            Query.Include(x => x.Color);
+
+            Query.Include(x => x.Sire);
+
+            Query.Include(x => x.Dam);
         }
     }
 }

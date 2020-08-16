@@ -18,7 +18,8 @@ namespace TripleDerby.Core.Tests.Services.HorseServiceTests
             _id = new Guid("1BF95F24-0C0B-4C9A-8B80-46110CA9413E");
             _horse = new Horse
                 {
-                    Id = _id
+                    Id = _id,
+                    Color = new Color()
                 };
 
             Repository.Setup(x => x.Get(It.IsAny<HorseSpecification>())).ReturnsAsync(_horse);

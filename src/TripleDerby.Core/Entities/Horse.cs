@@ -41,6 +41,10 @@ namespace TripleDerby.Core.Entities
         
         public Guid OwnerId { get; set; }
 
+        public virtual Horse? Sire { get; set; }
+
+        public virtual Horse? Dam { get; set; }
+
         public virtual ICollection<HorseStatistic> Statistics { get; set; } = new Collection<HorseStatistic>();
     }
 }

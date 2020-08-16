@@ -273,6 +273,12 @@ namespace TripleDerby.Core.Services
             {
                 Id = x.Id,
                 Name = x.Name,
+                Color = x.Color.Name,
+                Earnings = x.Earnings,
+                RacePlace = x.RacePlace,
+                RaceShow = x.RaceShow,
+                RaceStarts = x.RaceStarts,
+                RaceWins = x.RaceWins
             });
 
             return results;

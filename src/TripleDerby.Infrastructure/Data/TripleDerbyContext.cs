@@ -22,6 +22,14 @@ namespace TripleDerby.Infrastructure.Data
             modelBuilder.Entity<Horse>()
                 .Property(c => c.LegTypeId)
                 .HasConversion<byte>();
+
+            modelBuilder.Entity<Horse>()
+                .HasOne(x => x.Sire)
+                .WithMany();
+
+            modelBuilder.Entity<Horse>()
+                .HasOne(x => x.Dam)
+                .WithMany();
         }
     }
 }
