@@ -16,7 +16,7 @@ namespace TripleDerby.Infrastructure.Tests.Data.Repositories.EFRepositoryTests
         {
             _id = Guid.NewGuid();
 
-            Context.Horses.Add(new Horse { Id = _id });
+            Context.Horses.Add(new Horse { Id = _id, Color = new Color() });
             Context.SaveChanges();
         }
 

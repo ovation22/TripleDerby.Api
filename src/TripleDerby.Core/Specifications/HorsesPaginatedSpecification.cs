@@ -7,7 +7,10 @@ namespace TripleDerby.Core.Specifications
     {
         public HorsesPaginatedSpecification(int skip, int take)
         {
-            Query.Paginate(skip, take);
+            Query
+                .Include(x => x.Color);
+            Query
+                .Paginate(skip, take);
         }
     }
 }

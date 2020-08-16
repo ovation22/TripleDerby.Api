@@ -4,10 +4,11 @@ using System.Threading.Tasks;
 using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TripleDerby.Core.Interfaces.Repositories;
 
 namespace TripleDerby.Infrastructure.Data.Repositories
 {
-    public abstract class EFRepository
+    public abstract class EFRepository : IEFRepository
     {
         private readonly TripleDerbyContext _context;
 
@@ -35,6 +36,13 @@ namespace TripleDerby.Infrastructure.Data.Repositories
             var dbSet = _context.Set<T>();
 
             return await dbSet.ToListAsync();
+        }
+
+        public async Task<int> Count<T>() where T : class
+        {
+            var dbSet = _context.Set<T>();
+
+            return await dbSet.CountAsync();
         }
 
         public async Task<T> Add<T>(T entity) where T : class
