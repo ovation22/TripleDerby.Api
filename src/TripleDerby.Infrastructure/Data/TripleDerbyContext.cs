@@ -12,6 +12,9 @@ namespace TripleDerby.Infrastructure.Data
         public virtual DbSet<Color> Colors { get; set; } = null!;
         public virtual DbSet<Horse> Horses { get; set; } = null!;
         public virtual DbSet<HorseStatistic> HorseStatistics { get; set; } = null!;
+        public virtual DbSet<Race> Races { get; set; } = null!;
+        public virtual DbSet<Surface> Surfaces { get; set; } = null!;
+        public virtual DbSet<Track> Tracks { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,6 +33,14 @@ namespace TripleDerby.Infrastructure.Data
             modelBuilder.Entity<Horse>()
                 .HasOne(x => x.Dam)
                 .WithMany();
+
+            modelBuilder.Entity<Race>()
+                .Property(c => c.TrackId)
+                .HasConversion<byte>();
+
+            modelBuilder.Entity<Race>()
+                .Property(c => c.SurfaceId)
+                .HasConversion<byte>();
         }
     }
 }
