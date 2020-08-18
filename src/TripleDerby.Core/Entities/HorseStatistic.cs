@@ -11,6 +11,8 @@ namespace TripleDerby.Core.Entities
 
         public Guid HorseId { get; set; }
 
+        public virtual Horse Horse { get; set; } = default!;
+
         public byte Actual { get; set; }
 
         public byte DominantPotential { get; set; }

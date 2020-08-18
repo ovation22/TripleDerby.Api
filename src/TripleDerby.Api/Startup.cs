@@ -49,6 +49,7 @@ namespace TripleDerby.Api
 
             services.AddCaching(Configuration, _hostContext);
 
+            services.AddScoped<IRaceService, RaceService>();
             services.AddScoped<IHorseService, HorseService>();
             services.AddScoped<IBreedingService, BreedingService>();
         }
