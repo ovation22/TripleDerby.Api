@@ -49,9 +49,10 @@ namespace TripleDerby.Api
 
             services.AddCaching(Configuration, _hostContext);
 
-            services.AddScoped<IRaceService, RaceService>();
+            services.AddScoped<ITrainingService, TrainingService>();
             services.AddScoped<IHorseService, HorseService>();
             services.AddScoped<IBreedingService, BreedingService>();
+            services.AddScoped<ITrainingService, TrainingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
