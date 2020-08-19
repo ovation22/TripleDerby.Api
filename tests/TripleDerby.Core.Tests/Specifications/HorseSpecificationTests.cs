@@ -33,7 +33,7 @@ namespace TripleDerby.Core.Tests.Specifications
         }
 
         [Fact]
-        public void WhenHorseNotFoundWIthId_ThenNull()
+        public void WhenHorseNotFoundWithId_ThenNull()
         {
             // Arrange
             var badHorseId = new Guid("172B6257-582D-4453-A13F-41C6CBE4CAB2");
