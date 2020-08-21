@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TripleDerby.Core.DTOs;
@@ -51,6 +52,23 @@ namespace TripleDerby.Core.Services
                 Surface = x.Surface.Name,
                 TrackId = x.TrackId,
                 Track = x.Track.Name
+            });
+        }
+
+        public Task<RaceRunResult> Race(byte raceId, Guid horseId)
+        {
+            // Get 10 Random Race Runners
+            // Create RaceRun
+            // Add Random Horses plus provided horseId to RaceRun
+            // Race - Create RaceRunTicks
+            // Build up RaceRunResults to return
+
+            return Task.FromResult(new RaceRunResult
+            {
+                Id = Guid.NewGuid(),
+                WinHorse = "Winner!",
+                PlaceHorse = "Place",
+                ShowHorse = "Show"
             });
         }
     }

@@ -22,7 +22,7 @@ namespace TripleDerby.Core.Tests.Services.TrainingServiceTests
         }
 
         [Fact]
-        public async Task ItReturnsTraining()
+        public async Task ItReturnsTrainingSessionResult()
         {
             // Arrange
             // Act

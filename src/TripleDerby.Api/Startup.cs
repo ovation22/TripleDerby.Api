@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,6 +11,7 @@ using TripleDerby.Core.Interfaces.Repositories;
 using TripleDerby.Core.Interfaces.Services;
 using TripleDerby.Core.Interfaces.Utilities;
 using TripleDerby.Core.Services;
+using TripleDerby.Infrastructure.Data;
 using TripleDerby.Infrastructure.Data.Repositories;
 using TripleDerby.Infrastructure.Logging;
 using TripleDerby.Infrastructure.Utilities;
@@ -49,19 +51,22 @@ namespace TripleDerby.Api
 
             services.AddCaching(Configuration, _hostContext);
 
-            services.AddScoped<ITrainingService, TrainingService>();
+            services.AddScoped<IRaceService, RaceService>();
             services.AddScoped<IHorseService, HorseService>();
             services.AddScoped<IBreedingService, BreedingService>();
             services.AddScoped<ITrainingService, TrainingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TripleDerbyContext db)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            db.Database.EnsureCreated();
+            db.Database.Migrate();
 
             app.UseHttpsRedirection();
 

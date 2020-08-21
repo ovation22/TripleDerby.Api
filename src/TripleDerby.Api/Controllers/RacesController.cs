@@ -66,5 +66,26 @@ namespace TripleDerby.Api.Controllers
 
             return BadRequest("Unable to return Race");
         }
+
+        // GET: api/Races/5/guid
+        [HttpPost("{raceId}/{horseId}")]
+        [ProducesResponseType(typeof(RaceRunResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Race(byte raceId, Guid horseId)
+        {
+            try
+            {
+                var result = await _raceService.Race(raceId, horseId);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+            }
+
+            return BadRequest("Unable to run Race");
+        }
     }
 }
