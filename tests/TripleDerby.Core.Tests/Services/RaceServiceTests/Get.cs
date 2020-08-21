@@ -10,13 +10,13 @@ namespace TripleDerby.Core.Tests.Services.RaceServiceTests
     public class Get : RaceServiceTestBase
     {
         private readonly byte _id;
-        private readonly Race _race;
+        private readonly Entities.Race _race;
 
         public Get()
         {
             _id = 4;
-            _race = new Race
-                {
+            _race = new Entities.Race
+            {
                     Id = _id,
                     Track = new Track(),
                     Surface = new Surface()

@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Moq;
 using TripleDerby.Core.DTOs;
-using TripleDerby.Core.Entities;
 using Xunit;
 
 namespace TripleDerby.Core.Tests.Services.RaceServiceTests
@@ -29,7 +28,7 @@ namespace TripleDerby.Core.Tests.Services.RaceServiceTests
             await Service.GetAll();
 
             // Assert
-            Repository.Verify(x => x.GetAll<Race>(), Times.Once());
+            Repository.Verify(x => x.GetAll<Entities.Race>(), Times.Once());
         }
     }
 }
