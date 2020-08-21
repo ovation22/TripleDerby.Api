@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TripleDerby.Core.DTOs;
@@ -42,6 +43,21 @@ namespace TripleDerby.Core.Services
                 Name = x.Name,
                 Description = x.Description
             });
+        }
+
+        public async Task<TrainingSessionResult> Train(byte trainingId, Guid horseId)
+        {
+            const string result = "Hooray!";
+            var trainingSession = new TrainingSession
+            {
+                TrainingId = trainingId,
+                HorseId = horseId,
+                Result = result
+            };
+
+            await _repository.Add(trainingSession);
+
+            return new TrainingSessionResult { Result = result };
         }
     }
 }

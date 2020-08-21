@@ -19,6 +19,7 @@ namespace TripleDerby.Infrastructure.Data
         public virtual DbSet<Surface> Surfaces { get; set; } = null!;
         public virtual DbSet<Track> Tracks { get; set; } = null!;
         public virtual DbSet<Training> Trainings { get; set; } = null!;
+        public virtual DbSet<TrainingSession> TrainingSessions { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
