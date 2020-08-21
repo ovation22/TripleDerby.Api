@@ -47,7 +47,7 @@ namespace TripleDerby.Api.Controllers
         }
 
         // GET: api/Trainings/5
-        [HttpGet("{id}")]
+        [HttpGet("{trainingId}")]
         [ProducesResponseType(typeof(TrainingResult), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -65,6 +65,27 @@ namespace TripleDerby.Api.Controllers
             }
 
             return BadRequest("Unable to return Training");
+        }
+
+        // GET: api/Trainings/5/guid
+        [HttpPost("{trainingId}/{horseId}")]
+        [ProducesResponseType(typeof(TrainingSessionResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Train(byte trainingId, Guid horseId)
+        {
+            try
+            {
+                var result = await _trainingService.Train(trainingId, horseId);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+            }
+
+            return BadRequest("Unable to create Training Session");
         }
     }
 }
