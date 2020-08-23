@@ -243,7 +243,7 @@ namespace TripleDerby.Core.Services
 
             if (string.IsNullOrEmpty(cacheValue))
             {
-                results = (await GetRandomHorses(new RandomRetiredHorseSpecification(isMale))).ToList();
+                results = (await GetRandomHorses(new HorseRandomRetiredSpecification(isMale))).ToList();
 
                 await SetCache(cacheKey, results);
             }

@@ -12,7 +12,7 @@ namespace TripleDerby.Core.Entities
 
         public virtual RaceRun RaceRun { get; set; } = default!;
 
-        public Guid? HorseId { get; set; }
+        public Guid HorseId { get; set; }
 
         public virtual Horse Horse { get; set; } = default!;
 

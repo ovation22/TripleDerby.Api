@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TripleDerby.Core.DTOs;
 using TripleDerby.Core.Entities;
+using TripleDerby.Core.Enums;
 using TripleDerby.Core.Interfaces.Repositories;
 using TripleDerby.Core.Interfaces.Services;
 using TripleDerby.Core.Specifications;
@@ -55,21 +56,31 @@ namespace TripleDerby.Core.Services
             });
         }
 
-        public Task<RaceRunResult> Race(byte raceId, Guid horseId)
+        public async Task<RaceRunResult> Race(byte raceId, Guid horseId)
         {
-            // Get 10 Random Race Runners
-            // Create RaceRun
-            // Add Random Horses plus provided horseId to RaceRun
+            var racers = await _repository.List(new HorseRandomRacerSpecification());
+
+            var raceRunHorses = new List<RaceRunHorse> { new RaceRunHorse { HorseId = horseId, PostPosition = 1 } };
+            raceRunHorses.AddRange(racers.Select(racer => new RaceRunHorse { HorseId = racer.Id, PostPosition = 1 }));
+
+            var raceRun = new RaceRun
+            {
+                ConditionId = ConditionId.Fast, // TODO
+                Horses = raceRunHorses.OrderBy(x => Guid.NewGuid()).ToList()
+            };
+
             // Race - Create RaceRunTicks
             // Build up RaceRunResults to return
 
-            return Task.FromResult(new RaceRunResult
+            await _repository.Add(raceRun);
+
+            return new RaceRunResult
             {
                 Id = Guid.NewGuid(),
                 WinHorse = "Winner!",
                 PlaceHorse = "Place",
                 ShowHorse = "Show"
-            });
+            };
         }
     }
 }
