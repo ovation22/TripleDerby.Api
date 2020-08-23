@@ -53,6 +53,7 @@ namespace TripleDerby.Api
 
             services.AddScoped<IRaceService, RaceService>();
             services.AddScoped<IHorseService, HorseService>();
+            services.AddScoped<IFeedingService, FeedingService>();
             services.AddScoped<IBreedingService, BreedingService>();
             services.AddScoped<ITrainingService, TrainingService>();
         }
