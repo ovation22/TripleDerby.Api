@@ -4,9 +4,9 @@ using TripleDerby.Core.Entities;
 
 namespace TripleDerby.Core.Specifications
 {
-    public sealed class RandomRetiredHorseSpecification : Specification<Horse>, ISpecification<Horse>
+    public sealed class HorseRandomRetiredSpecification : Specification<Horse>, ISpecification<Horse>
     {
-        public RandomRetiredHorseSpecification(bool isMale)
+        public HorseRandomRetiredSpecification(bool isMale)
         {
             Take = 10;
             Query

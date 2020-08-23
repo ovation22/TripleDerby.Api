@@ -7,14 +7,13 @@ using Xunit;
 
 namespace TripleDerby.Core.Tests.Specifications
 {
-    public class RandomRetiredHorseSpecificationTests
+    public class HorseRandomRetiredSpecificationTests
     {
         private readonly Guid _damId;
         private readonly Guid _sireId;
         private readonly Guid _notRetiredSireId;
 
-
-        public RandomRetiredHorseSpecificationTests()
+        public HorseRandomRetiredSpecificationTests()
         {
             _damId = new Guid("F5FC31D9-2AB5-4C01-B1D9-904518279E33");
             _sireId = new Guid("5A35DA38-7D79-42C4-87E6-DD9D91A507ED");
@@ -25,7 +24,7 @@ namespace TripleDerby.Core.Tests.Specifications
         public void GivenIsMale_WhenIsRetired_ThenSireIsIncludedInResults()
         {
             // Arrange
-            var spec = new RandomRetiredHorseSpecification(true);
+            var spec = new HorseRandomRetiredSpecification(true);
 
             // Act
             var result = GetTestCollection()
@@ -40,7 +39,7 @@ namespace TripleDerby.Core.Tests.Specifications
         public void GivenIsNotMale_WhenIsRetired_ThenDamIsIncludedInResults()
         {
             // Arrange
-            var spec = new RandomRetiredHorseSpecification(false);
+            var spec = new HorseRandomRetiredSpecification(false);
 
             // Act
             var result = GetTestCollection()
@@ -55,7 +54,7 @@ namespace TripleDerby.Core.Tests.Specifications
         public void GivenIsMale_WhenIsRetired_ThenNotRetiredSireIdIsNotIncludedInResults()
         {
             // Arrange
-            var spec = new RandomRetiredHorseSpecification(true);
+            var spec = new HorseRandomRetiredSpecification(true);
 
             // Act
             var result = GetTestCollection()
