@@ -20,6 +20,8 @@ namespace TripleDerby.Infrastructure.Data
         public virtual DbSet<Track> Tracks { get; set; } = null!;
         public virtual DbSet<Training> Trainings { get; set; } = null!;
         public virtual DbSet<TrainingSession> TrainingSessions { get; set; } = null!;
+        public virtual DbSet<Feeding> Feedings { get; set; } = null!;
+        public virtual DbSet<FeedingSession> FeedingSession { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
