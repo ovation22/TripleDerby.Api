@@ -10,7 +10,7 @@ namespace TripleDerby.Core.DTOs
 
         public string Description { get; set; } = default!;
 
-        public float Furlongs { get; set; }
+        public decimal Furlongs { get; set; }
 
         public SurfaceId SurfaceId { get; set; }
 

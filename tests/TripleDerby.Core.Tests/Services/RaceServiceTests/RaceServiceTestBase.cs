@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using Ardalis.Specification;
 using Moq;
-using TripleDerby.Core.Entities;
 using TripleDerby.Core.Interfaces.Repositories;
 using TripleDerby.Core.Services;
 
@@ -14,8 +14,8 @@ namespace TripleDerby.Core.Tests.Services.RaceServiceTests
         public RaceServiceTestBase()
         {
             Repository = new Mock<ITripleDerbyRepository>();
-            Repository.Setup(x => x.GetAll<Race>())
-                .ReturnsAsync(new List<Race>());
+            Repository.Setup(x => x.List(It.IsAny<ISpecification<Entities.Race>>()))
+                .ReturnsAsync(new List<Entities.Race>());
 
             Service = new RaceService(Repository.Object);
         }

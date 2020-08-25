@@ -41,7 +41,7 @@ namespace TripleDerby.Core.Services
 
         public async Task<IEnumerable<RacesResult>> GetAll()
         {
-            var races = await _repository.GetAll<Race>();
+            var races = await _repository.List(new RaceSpecification());
 
             return races.Select(x => new RacesResult
             {
