@@ -1,14 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TripleDerby.Core.Enums;
 
 namespace TripleDerby.Core.Entities
 {
     public class Track
     {
         [Key]
-        public byte Id { get; set; }
+        public TrackId Id { get; set; }
 
         public string Name { get; set; } = default!;
-
-        public string Description { get; set; } = default!;
     }
 }

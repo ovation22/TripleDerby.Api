@@ -41,6 +41,14 @@ namespace TripleDerby.Infrastructure.Data
                 .HasOne(x => x.Dam)
                 .WithMany();
 
+            modelBuilder.Entity<Track>()
+                .Property(c => c.Id)
+                .HasConversion<byte>();
+
+            modelBuilder.Entity<Surface>()
+                .Property(c => c.Id)
+                .HasConversion<byte>();
+
             modelBuilder.Entity<Race>()
                 .Property(c => c.TrackId)
                 .HasConversion<byte>();

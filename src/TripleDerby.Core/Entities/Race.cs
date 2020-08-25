@@ -12,7 +12,7 @@ namespace TripleDerby.Core.Entities
 
         public string Description { get; set; } = default!;
 
-        public float Furlongs { get; set; }
+        public decimal Furlongs { get; set; }
 
         public TrackId TrackId { get; set; }
 
