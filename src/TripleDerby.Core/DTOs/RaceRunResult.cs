@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TripleDerby.Core.DTOs
 {
@@ -13,5 +14,7 @@ namespace TripleDerby.Core.DTOs
         public string PlaceHorse { get; set; } = default!;
 
         public string ShowHorse { get; set; } = default!;
+
+        public List<string> PlayByPlay { get; set; } = default!;
     }
 }

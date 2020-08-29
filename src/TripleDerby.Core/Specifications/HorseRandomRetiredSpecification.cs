@@ -8,13 +8,11 @@ namespace TripleDerby.Core.Specifications
     {
         public HorseRandomRetiredSpecification(bool isMale)
         {
-            Take = 10;
             Query
                 .Where(x => x.IsMale == isMale && x.IsRetired)
                 .OrderBy(x => Guid.NewGuid());
             Query.Include(x => x.Color);
+            Query.Paginate(0, 10);
         }
-
-        public new int Take { get; internal set; }
     }
 }
