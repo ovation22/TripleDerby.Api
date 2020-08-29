@@ -30,7 +30,7 @@ namespace TripleDerby.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<HorsesResult>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> GetAll(int pageIndex = 0, int itemsPage = 1000)
+        public async Task<IActionResult> GetAll(int pageIndex = 0, int itemsPage = 100)
         {
             try
             {

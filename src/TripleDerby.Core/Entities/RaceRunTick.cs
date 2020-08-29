@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TripleDerby.Core.Entities
@@ -12,12 +13,10 @@ namespace TripleDerby.Core.Entities
 
         public virtual RaceRun RaceRun { get; set; } = default!;
 
-        public Guid? HorseId { get; set; }
-
-        public virtual Horse Horse { get; set; } = default!;
-
         public byte Tick { get; set; }
 
-        public byte Position { get; set; }
+        public string Note { get; set; } = default!;
+
+        public virtual ICollection<RaceRunTickHorse> RaceRunTickHorses { get; set; } = default!;
     }
 }

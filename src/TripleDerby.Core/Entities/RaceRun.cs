@@ -31,6 +31,8 @@ namespace TripleDerby.Core.Entities
 
         public int Purse { get; set; }
 
-        public virtual ICollection<RaceRunHorse> Horses { get; set; } = new Collection<RaceRunHorse>();
+        public virtual ICollection<RaceRunHorse> Horses { get; set; } = default!;
+
+        public virtual ICollection<RaceRunTick> RaceRunTicks { get; set; } = default!;
     }
 }

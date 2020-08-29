@@ -60,17 +60,34 @@ namespace TripleDerby.Core.Services
         {
             var racers = await _repository.List(new HorseRandomRacerSpecification());
 
-            var raceRunHorses = new List<RaceRunHorse> { new RaceRunHorse { HorseId = horseId, PostPosition = 1 } };
-            raceRunHorses.AddRange(racers.Select(racer => new RaceRunHorse { HorseId = racer.Id, PostPosition = 1 }));
+            var raceRunHorses = new List<RaceRunHorse> { new RaceRunHorse { HorseId = horseId, Lane = 1 } };
+            raceRunHorses.AddRange(racers.Select(racer => new RaceRunHorse { HorseId = racer.Id, Lane = 2 })); // TODO: lane
+
+            var raceRunTicks = new List<RaceRunTick>
+            {
+                new RaceRunTick
+                {
+                    Tick = 1,
+                    Note = "Horse 1 is strong out of the gate!",
+                    RaceRunTickHorses = new List<RaceRunTickHorse>
+                    {
+                        new RaceRunTickHorse
+                        {
+                            HorseId = horseId,
+                            Lane = 1,
+                            Distance = 1
+                        }
+                    }
+                }
+            };
 
             var raceRun = new RaceRun
             {
-                ConditionId = ConditionId.Fast, // TODO
-                Horses = raceRunHorses.OrderBy(x => Guid.NewGuid()).ToList()
+                ConditionId = ConditionId.Fast, // TODO: random condition
+                Horses = raceRunHorses.OrderBy(x => Guid.NewGuid()).ToList(),
+                Purse = 30000, // TODO
+                RaceRunTicks = raceRunTicks
             };
-
-            // Race - Create RaceRunTicks
-            // Build up RaceRunResults to return
 
             await _repository.Add(raceRun);
 
@@ -79,7 +96,11 @@ namespace TripleDerby.Core.Services
                 Id = Guid.NewGuid(),
                 WinHorse = "Winner!",
                 PlaceHorse = "Place",
-                ShowHorse = "Show"
+                ShowHorse = "Show",
+                PlayByPlay = new List<string>
+                {
+                    raceRun.RaceRunTicks.SelectMany(x => x.Note).ToString()!
+                }
             };
         }
     }

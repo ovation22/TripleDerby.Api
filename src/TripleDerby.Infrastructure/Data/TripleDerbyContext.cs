@@ -10,18 +10,19 @@ namespace TripleDerby.Infrastructure.Data
         }
 
         public virtual DbSet<Color> Colors { get; set; } = null!;
+        public virtual DbSet<Feeding> Feedings { get; set; } = null!;
+        public virtual DbSet<FeedingSession> FeedingSession { set; get; } = null!;
         public virtual DbSet<Horse> Horses { get; set; } = null!;
         public virtual DbSet<HorseStatistic> HorseStatistics { get; set; } = null!;
         public virtual DbSet<Race> Races { get; set; } = null!;
         public virtual DbSet<RaceRun> RaceRuns { get; set; } = null!;
         public virtual DbSet<RaceRunHorse> RaceRunHorses { get; set; } = null!;
         public virtual DbSet<RaceRunTick> RaceRunTicks { get; set; } = null!;
+        public virtual DbSet<RaceRunTickHorse> RaceRunTickHorses { get; set; } = null!;
         public virtual DbSet<Surface> Surfaces { get; set; } = null!;
         public virtual DbSet<Track> Tracks { get; set; } = null!;
         public virtual DbSet<Training> Trainings { get; set; } = null!;
         public virtual DbSet<TrainingSession> TrainingSessions { get; set; } = null!;
-        public virtual DbSet<Feeding> Feedings { get; set; } = null!;
-        public virtual DbSet<FeedingSession> FeedingSession { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
