@@ -9,8 +9,10 @@ namespace TripleDerby.Core.Specifications
         {
             Query
                 .Include(x => x.Color);
+
             Query
-                .Paginate(skip, take);
+                .Skip(skip)
+                .Take(take);
         }
     }
 }

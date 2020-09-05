@@ -11,8 +11,10 @@ namespace TripleDerby.Core.Specifications
             Query
                 .Where(x => x.IsMale == isMale && x.IsRetired)
                 .OrderBy(x => Guid.NewGuid());
+
             Query.Include(x => x.Color);
-            Query.Paginate(0, 10);
+
+            Query.Take(10);
         }
     }
 }
