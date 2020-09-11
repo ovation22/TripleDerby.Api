@@ -34,13 +34,13 @@ jobs:
         dotnet-version: ${{ env.NETCORE_VERSION }}
     
     - name: Restore packages
-      run: dotnet restore
+      run: dotnet restore TripleDerby.Api.sln
 
     - name: Build app
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build TripleDerby.Api.sln --configuration Release --no-restore
 
     - name: Publish app for deploy
-      run: dotnet publish --configuration Release --no-build --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      run: dotnet publish TripleDerby.Api.sln --configuration Release --no-build --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
     - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v1
