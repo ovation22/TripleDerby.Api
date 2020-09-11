@@ -61,14 +61,14 @@ namespace TripleDerby.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TripleDerbyContext db)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsEnvironment("Local"))
             {
                 app.UseDeveloperExceptionPage();
             }
 
             db.Database.EnsureCreated();
             db.Database.Migrate();
-
+            
             app.UseHttpsRedirection();
 
             app.UseSwaggerConfig();

@@ -3,26 +3,26 @@ using TripleDerby.Core.Entities;
 
 namespace TripleDerby.Infrastructure.Data
 {
-    public class TripleDerbyContext : DbContext
+    public sealed class TripleDerbyContext : DbContext
     {
         public TripleDerbyContext(DbContextOptions<TripleDerbyContext> options) : base(options)
         {
         }
 
-        public virtual DbSet<Color> Colors { get; set; } = null!;
-        public virtual DbSet<Feeding> Feedings { get; set; } = null!;
-        public virtual DbSet<FeedingSession> FeedingSession { set; get; } = null!;
-        public virtual DbSet<Horse> Horses { get; set; } = null!;
-        public virtual DbSet<HorseStatistic> HorseStatistics { get; set; } = null!;
-        public virtual DbSet<Race> Races { get; set; } = null!;
-        public virtual DbSet<RaceRun> RaceRuns { get; set; } = null!;
-        public virtual DbSet<RaceRunHorse> RaceRunHorses { get; set; } = null!;
-        public virtual DbSet<RaceRunTick> RaceRunTicks { get; set; } = null!;
-        public virtual DbSet<RaceRunTickHorse> RaceRunTickHorses { get; set; } = null!;
-        public virtual DbSet<Surface> Surfaces { get; set; } = null!;
-        public virtual DbSet<Track> Tracks { get; set; } = null!;
-        public virtual DbSet<Training> Trainings { get; set; } = null!;
-        public virtual DbSet<TrainingSession> TrainingSessions { get; set; } = null!;
+        public DbSet<Color> Colors { get; set; } = null!;
+        public DbSet<Feeding> Feedings { get; set; } = null!;
+        public DbSet<FeedingSession> FeedingSession { set; get; } = null!;
+        public DbSet<Horse> Horses { get; set; } = null!;
+        public DbSet<HorseStatistic> HorseStatistics { get; set; } = null!;
+        public DbSet<Race> Races { get; set; } = null!;
+        public DbSet<RaceRun> RaceRuns { get; set; } = null!;
+        public DbSet<RaceRunHorse> RaceRunHorses { get; set; } = null!;
+        public DbSet<RaceRunTick> RaceRunTicks { get; set; } = null!;
+        public DbSet<RaceRunTickHorse> RaceRunTickHorses { get; set; } = null!;
+        public DbSet<Surface> Surfaces { get; set; } = null!;
+        public DbSet<Track> Tracks { get; set; } = null!;
+        public DbSet<Training> Trainings { get; set; } = null!;
+        public DbSet<TrainingSession> TrainingSessions { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
