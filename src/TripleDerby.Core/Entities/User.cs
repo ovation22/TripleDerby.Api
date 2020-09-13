@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using TripleDerby.Core.Enums;
 
 namespace TripleDerby.Core.Entities
 {
