@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +26,7 @@ namespace TripleDerby.Api.Controllers
 
         // GET: api/Horses
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<HorsesResult>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(HorsesResult), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> GetAll(int pageIndex = 0, int itemsPage = 100)

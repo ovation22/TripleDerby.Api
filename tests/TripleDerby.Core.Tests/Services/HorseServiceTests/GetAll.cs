@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Moq;
 using TripleDerby.Core.DTOs;
 using TripleDerby.Core.Specifications;
@@ -18,7 +17,7 @@ namespace TripleDerby.Core.Tests.Services.HorseServiceTests
 
             // Assert
             Assert.NotNull(horses);
-            Assert.IsAssignableFrom<IEnumerable<HorsesResult>>(horses);
+            Assert.IsAssignableFrom<HorsesResult>(horses);
         }
 
         [Fact]

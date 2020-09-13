@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,23 +40,27 @@ namespace TripleDerby.Core.Services
             };
         }
 
-        public async Task<IEnumerable<HorsesResult>> GetAll(int pageIndex, int itemsPage)
+        public async Task<HorsesResult> GetAll(int pageIndex, int itemsPage)
         {
             var paginatedSpecification = new HorsesPaginatedSpecification(itemsPage * pageIndex, itemsPage);
 
             var paginatedHorses = await _repository.List(paginatedSpecification);
             var totalItems = await _repository.Count<Horse>();
 
-            return paginatedHorses.Select(x => new HorsesResult
+            return new HorsesResult
             {
-                Id = x.Id,
-                Name = x.Name,
-                Color = x.Color.Name,
-                Earnings = x.Earnings,
-                RacePlace = x.RacePlace,
-                RaceShow = x.RaceShow,
-                RaceStarts = x.RaceStarts,
-                RaceWins = x.RaceWins,
+                Horses = paginatedHorses.Select(x => new HorsesResult.Horse
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Color = x.Color.Name,
+                    Earnings = x.Earnings,
+                    RacePlace = x.RacePlace,
+                    RaceShow = x.RaceShow,
+                    RaceStarts = x.RaceStarts,
+                    RaceWins = x.RaceWins,
+
+                }),
                 PaginationInfo = new PaginationInfo
                 {
                     ActualPage = pageIndex,
@@ -67,12 +70,12 @@ namespace TripleDerby.Core.Services
                         int.Parse(Math.Ceiling((decimal)totalItems / itemsPage)
                             .ToString(CultureInfo.InvariantCulture)),
                     Next = pageIndex == int.Parse(Math.Ceiling((decimal)totalItems / itemsPage)
-                               .ToString(CultureInfo.InvariantCulture)) - 1
+                        .ToString(CultureInfo.InvariantCulture)) - 1
                         ? "is-disabled"
                         : "",
                     Previous = pageIndex == 0 ? "is-disabled" : ""
                 }
-            });
+            };
         }
     }
 }
