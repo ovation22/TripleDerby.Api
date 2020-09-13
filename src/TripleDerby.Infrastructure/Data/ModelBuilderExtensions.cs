@@ -28,7 +28,7 @@ namespace TripleDerby.Infrastructure.Data
             );
 
             modelBuilder.Entity<Feeding>().HasData(
-                new Feeding { Id = 1, Name = "Feed", Description = "Feed" }
+                new Feeding { Id = 1, Name = "Apple", Description = "Apple" }
             );
 
             modelBuilder.Entity<Statistic>().HasData(
@@ -44,7 +44,19 @@ namespace TripleDerby.Infrastructure.Data
             );
 
             modelBuilder.Entity<Horse>().HasData(
-                new Horse { Id = new Guid("210BB356-F8AE-4DBE-98F6-16DFA20CF930"), Name = "War Admiral", ColorId = 2, LegTypeId = LegTypeId.FrontRunner, IsMale = true, OwnerId = adminId, RaceStarts = 76, RaceWins = 73, RacePlace = 2, RaceShow = 0, Earnings = 43553, IsRetired = true, Parented = 0 }
+                new Horse { Id = new Guid("210BB356-F8AE-4DBE-98F6-16DFA20CF930"), Name = "War Admiral", ColorId = 2, LegTypeId = LegTypeId.FrontRunner, IsMale = true, OwnerId = adminId, RaceStarts = 76, RaceWins = 73, RacePlace = 2, RaceShow = 0, Earnings = 43553, IsRetired = true, Parented = 0 },
+                new Horse { Id = new Guid("2357E7CB-AE0F-4A36-9B64-1D544D14DB23"), Name = "Genuine Risk", ColorId = 3, LegTypeId = LegTypeId.LastSpurt, IsMale = false, OwnerId = adminId, RaceStarts = 19, RaceWins = 19, RacePlace = 0, RaceShow = 0, Earnings = 1066085, IsRetired = true, Parented = 0 }
+            );
+
+            modelBuilder.Entity<HorseStatistic>().HasData(
+                new HorseStatistic { Id = new Guid("711C7215-22ED-4BBD-A926-FCEAF5B215A1"), HorseId = new Guid("210BB356-F8AE-4DBE-98F6-16DFA20CF930"), StatisticId = StatisticId.Speed, Actual = 70, DominantPotential = 70, RecessivePotential = 75 },
+                new HorseStatistic { Id = new Guid("B125A994-100B-499B-B6D0-939D5ADD05A9"), HorseId = new Guid("210BB356-F8AE-4DBE-98F6-16DFA20CF930"), StatisticId = StatisticId.Stamina, Actual = 70, DominantPotential = 70, RecessivePotential = 80 },
+                new HorseStatistic { Id = new Guid("E1407FE2-EA95-4C9A-9A29-BCD85AF63726"), HorseId = new Guid("210BB356-F8AE-4DBE-98F6-16DFA20CF930"), StatisticId = StatisticId.Agility, Actual = 70, DominantPotential = 75, RecessivePotential = 70 },
+                new HorseStatistic { Id = new Guid("DB342410-7708-47C5-8788-3A46DD52E8AB"), HorseId = new Guid("210BB356-F8AE-4DBE-98F6-16DFA20CF930"), StatisticId = StatisticId.Durability, Actual = 70, DominantPotential = 75, RecessivePotential = 70 },
+                new HorseStatistic { Id = new Guid("1F8D9D4D-2417-43FC-96E9-A7BE9DABEC52"), HorseId = new Guid("2357E7CB-AE0F-4A36-9B64-1D544D14DB23"), StatisticId = StatisticId.Speed, Actual = 71, DominantPotential = 74, RecessivePotential = 64 },
+                new HorseStatistic { Id = new Guid("42D67B23-1471-4B00-81E6-E90FDD8E80C7"), HorseId = new Guid("2357E7CB-AE0F-4A36-9B64-1D544D14DB23"), StatisticId = StatisticId.Stamina, Actual = 74, DominantPotential = 81, RecessivePotential = 71 },
+                new HorseStatistic { Id = new Guid("F51C705F-9AC2-4E18-91B1-FB30D527774C"), HorseId = new Guid("2357E7CB-AE0F-4A36-9B64-1D544D14DB23"), StatisticId = StatisticId.Agility, Actual = 61, DominantPotential = 64, RecessivePotential = 71 },
+                new HorseStatistic { Id = new Guid("DB9C2292-7641-4C54-98A4-F095BBACC361"), HorseId = new Guid("2357E7CB-AE0F-4A36-9B64-1D544D14DB23"), StatisticId = StatisticId.Durability, Actual = 64, DominantPotential = 71, RecessivePotential = 61 }
             );
         }
     }
