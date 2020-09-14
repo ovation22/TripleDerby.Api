@@ -10,9 +10,9 @@ namespace TripleDerby.Infrastructure.Data.Repositories
 {
     public abstract class EFRepository : IEFRepository
     {
-        private readonly TripleDerbyContext _context;
+        private readonly DbContext _context;
 
-        protected EFRepository(TripleDerbyContext context)
+        protected EFRepository(DbContext context)
         {
             _context = context;
         }

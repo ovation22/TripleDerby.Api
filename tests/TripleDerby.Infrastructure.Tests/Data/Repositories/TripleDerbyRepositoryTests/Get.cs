@@ -4,11 +4,11 @@ using TripleDerby.Core.Entities;
 using TripleDerby.Core.Specifications;
 using Xunit;
 
-namespace TripleDerby.Infrastructure.Tests.Data.Repositories.EFRepositoryTests
+namespace TripleDerby.Infrastructure.Tests.Data.Repositories.TripleDerbyRepositoryTests
 {
     [Collection("ContextFixture")]
-    [Trait("Category", "EFRepository")]
-    public class Get : EFRepositoryTestBase
+    [Trait("Category", "TripleDerbyRepository")]
+    public class Get : TripleDerbyRepositoryTestBase
     {
         private readonly Guid _id;
 

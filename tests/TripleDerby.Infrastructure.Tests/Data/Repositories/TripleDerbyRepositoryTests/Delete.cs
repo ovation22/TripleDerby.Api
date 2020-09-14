@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using TripleDerby.Core.Entities;
 using Xunit;
 
-namespace TripleDerby.Infrastructure.Tests.Data.Repositories.EFRepositoryTests
+namespace TripleDerby.Infrastructure.Tests.Data.Repositories.TripleDerbyRepositoryTests
 {
     [Collection("ContextFixture")]
-    [Trait("Category", "EFRepository")]
-    public class Delete : EFRepositoryTestBase
+    [Trait("Category", "TripleDerbyRepository")]
+    public class Delete : TripleDerbyRepositoryTestBase
     {
         private readonly Horse _horse;
 

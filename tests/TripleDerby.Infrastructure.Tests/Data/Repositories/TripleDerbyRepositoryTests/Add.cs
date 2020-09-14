@@ -2,11 +2,11 @@
 using TripleDerby.Core.Entities;
 using Xunit;
 
-namespace TripleDerby.Infrastructure.Tests.Data.Repositories.EFRepositoryTests
+namespace TripleDerby.Infrastructure.Tests.Data.Repositories.TripleDerbyRepositoryTests
 {
     [Collection("ContextFixture")]
-    [Trait("Category", "EFRepository")]
-    public class Add : EFRepositoryTestBase
+    [Trait("Category", "TripleDerbyRepository")]
+    public class Add : TripleDerbyRepositoryTestBase
     {
         public Add(ContextFixture fixture) : base(fixture)
         {
