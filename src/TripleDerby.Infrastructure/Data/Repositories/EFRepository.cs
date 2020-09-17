@@ -48,7 +48,7 @@ namespace TripleDerby.Infrastructure.Data.Repositories
         public async Task<T> Add<T>(T entity) where T : class
         {
             await _context.Set<T>().AddAsync(entity);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(); // TODO: extract
 
             return entity;
         }
