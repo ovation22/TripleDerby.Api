@@ -125,22 +125,24 @@ namespace TripleDerby.Core.Services
 
             IEnumerable<Color> sortedColors = colors
                 .Where(x => includeSpecialColors || x.IsSpecial == false)
-                .OrderBy(x => _randomGenerator.Next(colors.Count * (x.IsSpecial ? x.Weight / multiplier : x.Weight)));
+                .OrderBy(x => 
+                    _randomGenerator
+                        .Next(colors.Count * (x.IsSpecial ? x.Weight / multiplier : x.Weight)));
 
-            return sortedColors.Take(1).SingleOrDefault();
+            return sortedColors.Take(1).Single();
         }
 
         public List<HorseStatistic> GenerateHorseStatistics(ICollection<HorseStatistic> sireStats, ICollection<HorseStatistic> damStats)
         {
-            List<HorseStatistic> foalStatistics = new List<HorseStatistic>();
-
-            foalStatistics.Add(new HorseStatistic { StatisticId = StatisticId.Happiness });
-
-            foreach (var statistic in Enum.GetValues(typeof(StatisticId)).Cast<StatisticId>().Where(x => x != StatisticId.Happiness))
-            {
-                foalStatistics.Add(GenerateHorseStatistic(sireStats, damStats, statistic));
-            }
+            List<HorseStatistic> foalStatistics =
+                new List<HorseStatistic> {new HorseStatistic {StatisticId = StatisticId.Happiness, DominantPotential = 100}};
             
+            foalStatistics
+                .AddRange(Enum.GetValues(typeof(StatisticId))
+                .Cast<StatisticId>()
+                .Where(x => x != StatisticId.Happiness)
+                .Select(statistic => GenerateHorseStatistic(sireStats, damStats, statistic)));
+
             return foalStatistics;
         }
 
