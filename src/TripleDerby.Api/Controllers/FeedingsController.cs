@@ -51,11 +51,11 @@ namespace TripleDerby.Api.Controllers
         [ProducesResponseType(typeof(FeedingResult), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Get(byte id)
+        public async Task<IActionResult> Get(byte feedingId)
         {
             try
             {
-                var result = await _feedingService.Get(id);
+                var result = await _feedingService.Get(feedingId);
 
                 return Ok(result);
             }
