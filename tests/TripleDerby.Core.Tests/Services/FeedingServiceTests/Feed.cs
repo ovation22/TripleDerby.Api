@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Moq;
 using TripleDerby.Core.DTOs;
@@ -11,9 +12,10 @@ namespace TripleDerby.Core.Tests.Services.FeedingServiceTests
 {
     public class Feed : FeedingServiceTestBase
     {
+        private readonly Horse _horse;
         private readonly Guid _horseId;
         private readonly byte _feedingId;
-        private readonly HorseStatistic _stat; 
+        private readonly HorseStatistic _stat;
         private readonly byte _originalHappiness;
         private readonly FeedingSession _feedingSession = default!;
 
@@ -26,11 +28,20 @@ namespace TripleDerby.Core.Tests.Services.FeedingServiceTests
             {
                 HorseId = _horseId,
                 Actual = _originalHappiness,
-                DominantPotential = 99
+                DominantPotential = 99,
+                StatisticId = StatisticId.Happiness
+            };
+            _horse = new Horse
+            {
+                Id = _horseId,
+                Statistics = new List<HorseStatistic>
+                {
+                    _stat
+                }
             };
             Repository.Setup(x =>
-                    x.Get(It.IsAny<HorseStatisticsSpecification>()))
-                .ReturnsAsync(() => _stat);
+                    x.Get(It.IsAny<HorseWithHappinessAndPriorFeedingsSpecification>()))
+                .ReturnsAsync(() => _horse);
 
             Repository.Setup(x => x.Add(It.IsAny<FeedingSession>())).Returns(_feedingSession);
         }
@@ -98,7 +109,7 @@ namespace TripleDerby.Core.Tests.Services.FeedingServiceTests
             this.RandomGenerator.Setup(x => x.Next(It.IsAny<int>(), It.IsAny<int>()));
 
             // Act
-            var result = await Service.Feed(_feedingId, _horseId);
+            await Service.Feed(_feedingId, _horseId);
 
             // Assert
             this.RandomGenerator.Verify(x => x.Next(0, 1));

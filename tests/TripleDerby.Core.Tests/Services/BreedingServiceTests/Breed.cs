@@ -27,7 +27,7 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
 
             Repository.Setup(x => x.Add(It.IsAny<Horse>()))
                 .Callback<Horse>(x => _newHorse = x)
-                .ReturnsAsync(new Horse{ Color = new Color() });
+                .Returns(new Horse{ Color = new Color() });
         }
 
         [Fact]
