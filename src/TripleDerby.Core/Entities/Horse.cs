@@ -46,5 +46,7 @@ namespace TripleDerby.Core.Entities
         public virtual Horse? Dam { get; set; }
 
         public virtual ICollection<HorseStatistic> Statistics { get; set; } = new Collection<HorseStatistic>();
+        
+        public virtual ICollection<FeedingSession> FeedingSessions { get; set; } = new Collection<FeedingSession>();
     }
 }

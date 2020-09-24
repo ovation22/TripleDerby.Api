@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using TripleDerby.Core.Entities;
 using Xunit;
 
@@ -19,13 +18,13 @@ namespace TripleDerby.Infrastructure.Tests.Data.Repositories.TripleDerbyReposito
         }
 
         [Fact]
-        public async Task ItUpdatesHorse()
+        public void ItUpdatesHorse()
         {
             // Arrange
             _horse.Name = "Updated";
             
             // Act
-            await Repository.Update(_horse);
+            Repository.Update(_horse);
 
             // Assert
             Assert.Contains(Context.Horses, x => x.Name == "Updated");

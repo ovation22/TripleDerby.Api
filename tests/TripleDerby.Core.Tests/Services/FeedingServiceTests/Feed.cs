@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Moq;
 using TripleDerby.Core.DTOs;
 using TripleDerby.Core.Entities;
+using TripleDerby.Core.Enums;
 using TripleDerby.Core.Specifications;
 using Xunit;
 
@@ -10,9 +12,10 @@ namespace TripleDerby.Core.Tests.Services.FeedingServiceTests
 {
     public class Feed : FeedingServiceTestBase
     {
+        private readonly Horse _horse;
         private readonly Guid _horseId;
         private readonly byte _feedingId;
-        private readonly HorseStatistic _stat; 
+        private readonly HorseStatistic _stat;
         private readonly byte _originalHappiness;
         private readonly FeedingSession _feedingSession = default!;
 
@@ -25,13 +28,22 @@ namespace TripleDerby.Core.Tests.Services.FeedingServiceTests
             {
                 HorseId = _horseId,
                 Actual = _originalHappiness,
-                DominantPotential = 99
+                DominantPotential = 99,
+                StatisticId = StatisticId.Happiness
+            };
+            _horse = new Horse
+            {
+                Id = _horseId,
+                Statistics = new List<HorseStatistic>
+                {
+                    _stat
+                }
             };
             Repository.Setup(x =>
-                    x.Get(It.IsAny<HorseStatisticsSpecification>()))
-                .ReturnsAsync(() => _stat);
+                    x.Get(It.IsAny<HorseWithHappinessAndPriorFeedingsSpecification>()))
+                .ReturnsAsync(() => _horse);
 
-            Repository.Setup(x => x.Add(It.IsAny<FeedingSession>())).ReturnsAsync(_feedingSession);
+            Repository.Setup(x => x.Add(It.IsAny<FeedingSession>())).Returns(_feedingSession);
         }
 
         [Fact]
@@ -75,6 +87,45 @@ namespace TripleDerby.Core.Tests.Services.FeedingServiceTests
 
             // Assert
             Assert.Equal(_stat.DominantPotential, _stat.Actual);
+        }
+
+        [Fact]
+        public async Task Given_WhenFeedAccepted_ThenAcceptedResult()
+        {
+            // Arrange
+            // Act
+            var result = await Service.Feed(_feedingId, _horseId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<FeedingSessionResult>(result);
+            Assert.Equal(FeedResponse.Accepted, result.Result);
+        }
+
+        [Fact]
+        public async Task Given_WhenFeedAccepted_ThenHappinessIncreaseByRange()
+        {
+            // Arrange
+            this.RandomGenerator.Setup(x => x.Next(It.IsAny<int>(), It.IsAny<int>()));
+
+            // Act
+            await Service.Feed(_feedingId, _horseId);
+
+            // Assert
+            this.RandomGenerator.Verify(x => x.Next(0, 1));
+        }
+
+        [Fact(Skip="for now")]
+        public async Task Given_WhenFeedFavorite_ThenHappinessIncreaseByRange()
+        {
+            // Arrange
+            this.RandomGenerator.Setup(x => x.Next(It.IsAny<int>(), It.IsAny<int>()));
+
+            // Act
+            var result = await Service.Feed(_feedingId, _horseId);
+
+            // Assert
+            this.RandomGenerator.Verify(x => x.Next(0, 2));
         }
     }
 }

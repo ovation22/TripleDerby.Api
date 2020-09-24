@@ -45,25 +45,25 @@ namespace TripleDerby.Infrastructure.Data.Repositories
             return await dbSet.CountAsync();
         }
 
-        public async Task<T> Add<T>(T entity) where T : class
+        public T Add<T>(T entity) where T : class
         {
-            await _context.Set<T>().AddAsync(entity);
-            await _context.SaveChangesAsync(); // TODO: extract
+            _context.Set<T>().Add(entity);
 
             return entity;
         }
 
-        public async Task Update<T>(T entity) where T : class
+        public void Update<T>(T entity) where T : class
         {
             _context.Entry(entity).State = EntityState.Modified;
-
-            await _context.SaveChangesAsync();
         }
 
-        public async Task Delete<T>(T entity) where T : class
+        public void Delete<T>(T entity) where T : class
         {
             _context.Set<T>().Remove(entity);
+        }
 
+        public async Task Save()
+        {
             await _context.SaveChangesAsync();
         }
 
