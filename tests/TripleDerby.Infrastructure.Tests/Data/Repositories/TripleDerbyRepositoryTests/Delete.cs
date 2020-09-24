@@ -23,7 +23,8 @@ namespace TripleDerby.Infrastructure.Tests.Data.Repositories.TripleDerbyReposito
         {
             // Arrange
             // Act
-            await Repository.Delete(_horse);
+            Repository.Delete(_horse);
+            await Repository.Save();
 
             // Assert
             Assert.DoesNotContain(Context.Horses, x => x == _horse);

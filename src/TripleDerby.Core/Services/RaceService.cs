@@ -89,7 +89,8 @@ namespace TripleDerby.Core.Services
                 RaceRunTicks = raceRunTicks
             };
 
-            await _repository.Add(raceRun);
+            _repository.Add(raceRun);
+            await _repository.Save();
 
             return new RaceRunResult
             {

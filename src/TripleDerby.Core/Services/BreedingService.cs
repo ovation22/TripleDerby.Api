@@ -80,7 +80,8 @@ namespace TripleDerby.Core.Services
             dam.Parented += 1;
             sire.Parented += 1;
             
-            var foal = await _repository.Add(horse);
+            var foal = _repository.Add(horse);
+            await _repository.Save();
 
             return new Foal
             {

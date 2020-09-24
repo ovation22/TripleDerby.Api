@@ -1,7 +1,9 @@
-﻿namespace TripleDerby.Core.DTOs
+﻿using TripleDerby.Core.Enums;
+
+namespace TripleDerby.Core.DTOs
 {
     public class FeedingSessionResult
     {
-        public string Result { get; set; } = default!;
+        public FeedResponse Result { get; set; }
     }
 }

@@ -69,6 +69,10 @@ namespace TripleDerby.Infrastructure.Data
             modelBuilder.Entity<Race>()
                 .Property(c => c.SurfaceId)
                 .HasConversion<byte>();
+
+            modelBuilder.Entity<FeedingSession>()
+                .Property(c => c.Result)
+                .HasConversion<byte>();
         }
     }
 }

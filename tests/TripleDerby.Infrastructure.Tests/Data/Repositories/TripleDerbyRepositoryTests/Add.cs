@@ -19,7 +19,8 @@ namespace TripleDerby.Infrastructure.Tests.Data.Repositories.TripleDerbyReposito
             var horse = new Horse();
 
             // Act
-            await Repository.Add(horse);
+            Repository.Add(horse);
+            await Repository.Save();
 
             // Assert
             Assert.Contains(Context.Horses, x => x == horse);
@@ -32,7 +33,8 @@ namespace TripleDerby.Infrastructure.Tests.Data.Repositories.TripleDerbyReposito
             var horse = new Horse();
 
             // Act
-            var newlyAddedHorse = await Repository.Add(horse);
+            var newlyAddedHorse = Repository.Add(horse);
+            await Repository.Save();
 
             // Assert
             Assert.Equal(horse, newlyAddedHorse);

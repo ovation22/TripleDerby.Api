@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using TripleDerby.Core.Enums;
 
 namespace TripleDerby.Core.Entities
 {
@@ -16,6 +17,6 @@ namespace TripleDerby.Core.Entities
 
         public virtual Horse Horse { get; set; } = default!;
 
-        public string Result { get; set; } = default!;
+        public FeedResponse Result { get; set; }
     }
 }

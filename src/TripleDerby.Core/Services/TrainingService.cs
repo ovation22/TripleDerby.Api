@@ -55,7 +55,8 @@ namespace TripleDerby.Core.Services
                 Result = result
             };
 
-            await _repository.Add(trainingSession);
+            _repository.Add(trainingSession);
+            await _repository.Save();
 
             return new TrainingSessionResult { Result = result };
         }

@@ -52,28 +52,37 @@ namespace TripleDerby.Core.Services
 
         public async Task<FeedingSessionResult> Feed(byte feedingId, Guid horseId)
         {
-            const string result = "Hooray!";
+            const FeedResponse result = FeedResponse.Accepted;
 
-            await AffectHorseStatistic(horseId, StatisticId.Happiness, 0, 9, 0);
+            // Get Horse, with Stats, and with prior feedings of type
+            // Save horse, with updated stats (Actual)
+            // [] check feeding type past results to determine result, etc.
+            var horse = await _repository.Get(new HorseWithHappinessAndPriorFeedingsSpecification(horseId, feedingId));
+            var horseHappiness = horse.Statistics.Single(x => x.StatisticId == StatisticId.Happiness);
+
+            horseHappiness.Actual = AffectHorseStatistic(horseHappiness, 0, 1, 0);
 
             var feedingSession = new FeedingSession
             {
                 FeedingId = feedingId,
-                HorseId = horseId,
                 Result = result
             };
+            
+            horse.FeedingSessions.Add(feedingSession);
 
-            await _repository.Add(feedingSession);
+            await _repository.Save();
 
             return new FeedingSessionResult { Result = result };
         }
 
-        private async Task AffectHorseStatistic(Guid horseId, StatisticId statisticId, int min, int max, int actualMin)
+        private byte AffectHorseStatistic(
+            HorseStatistic stat,
+            int min,
+            int max,
+            int actualMin
+        )
         {
-            var stat = await _repository
-                .Get(new HorseStatisticsSpecification(horseId, statisticId));
-
-            stat.Actual = (byte) Math.Clamp(stat.Actual + _randomGenerator.Next(min, max),
+            return (byte) Math.Clamp(stat.Actual + _randomGenerator.Next(min, max),
                 actualMin,
                 stat.DominantPotential);
         }
