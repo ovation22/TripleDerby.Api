@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Options;
+using TripleDerby.Core.Cache;
 using TripleDerby.Core.DTOs;
 using TripleDerby.Core.Entities;
 using TripleDerby.Core.Enums;
+using TripleDerby.Core.Interfaces.Caching;
 using TripleDerby.Core.Interfaces.Repositories;
 using TripleDerby.Core.Interfaces.Services;
 using TripleDerby.Core.Interfaces.Utilities;
@@ -14,16 +19,22 @@ namespace TripleDerby.Core.Services
 {
     public class FeedingService : IFeedingService
     {
+        private readonly int _cacheExpirationMinutes;
+        private readonly IDistributedCacheAdapter _cache;
         private readonly IRandomGenerator _randomGenerator;
         private readonly ITripleDerbyRepository _repository;
 
         public FeedingService(
+            IDistributedCacheAdapter cache,
             IRandomGenerator randomGenerator,
-            ITripleDerbyRepository repository
+            ITripleDerbyRepository repository,
+            IOptions<CacheConfig> cacheOptions
         )
         {
+            _cache = cache;
             _repository = repository;
             _randomGenerator = randomGenerator;
+            _cacheExpirationMinutes = cacheOptions.Value.DefaultExpirationMinutes;
         }
 
         public async Task<FeedingResult> Get(byte id)
@@ -39,6 +50,36 @@ namespace TripleDerby.Core.Services
         }
 
         public async Task<IEnumerable<FeedingsResult>> GetAll()
+        {
+            IEnumerable<FeedingsResult> results;
+            const string cacheKey = CacheKeys.Feedings;
+
+            var cacheValue = await _cache.GetStringAsync(cacheKey);
+
+            if (string.IsNullOrEmpty(cacheValue))
+            {
+                results = (await GetFeedings()).ToList();
+                await SetCache(cacheKey, results);
+            }
+            else
+            {
+                results = JsonSerializer.Deserialize<List<FeedingsResult>>(cacheValue);
+            }
+
+            return results;
+        }
+
+        private async Task SetCache(string cacheKey, IEnumerable<FeedingsResult> results)
+        {
+            var options = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(_cacheExpirationMinutes)
+            };
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(results), options);
+        }
+
+        private async Task<IEnumerable<FeedingsResult>> GetFeedings()
         {
             var feedings = await _repository.GetAll<Feeding>();
 
