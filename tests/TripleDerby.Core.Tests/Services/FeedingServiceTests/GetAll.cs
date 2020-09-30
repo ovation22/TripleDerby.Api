@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Moq;
 using TripleDerby.Core.DTOs;
-using TripleDerby.Core.Entities;
 using Xunit;
 
 namespace TripleDerby.Core.Tests.Services.FeedingServiceTests
@@ -22,14 +22,14 @@ namespace TripleDerby.Core.Tests.Services.FeedingServiceTests
         }
 
         [Fact]
-        public async Task ItCallsRepository()
+        public async Task ItGetsFromCache()
         {
             // Arrange
             // Act
             await Service.GetAll();
 
             // Assert
-            Repository.Verify(x => x.GetAll<Feeding>(), Times.Once());
+            Cache.Verify(x => x.GetOrCreate(It.IsAny<string>(), It.IsAny<Func<Task<IEnumerable<FeedingsResult>>>>()), Times.Once());
         }
     }
 }
