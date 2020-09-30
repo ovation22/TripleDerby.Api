@@ -5,11 +5,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TripleDerby.Api.Config;
+using TripleDerby.Core.Interfaces.Caching;
 using TripleDerby.Core.Interfaces.Logging;
 using TripleDerby.Core.Interfaces.Repositories;
 using TripleDerby.Core.Interfaces.Services;
 using TripleDerby.Core.Interfaces.Utilities;
 using TripleDerby.Core.Services;
+using TripleDerby.Infrastructure.Caching;
 using TripleDerby.Infrastructure.Data;
 using TripleDerby.Infrastructure.Data.Repositories;
 using TripleDerby.Infrastructure.Logging;
@@ -44,6 +46,7 @@ namespace TripleDerby.Api
             }
 
             services.AddSingleton<ITimeManager, TimeManager>();
+            services.AddSingleton<ICacheManager, CacheManager>();
             services.AddSingleton<IRandomGenerator, RandomGenerator>();
             services.AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
             services.AddScoped(typeof(ITripleDerbyRepository), typeof(TripleDerbyRepository));

@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using Microsoft.Extensions.Options;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Moq;
-using TripleDerby.Core.Cache;
+using TripleDerby.Core.DTOs;
 using TripleDerby.Core.Entities;
 using TripleDerby.Core.Interfaces.Caching;
 using TripleDerby.Core.Interfaces.Repositories;
@@ -13,23 +14,21 @@ namespace TripleDerby.Core.Tests.Services.FeedingServiceTests
     public class FeedingServiceTestBase
     {
         protected internal FeedingService Service;
-        protected internal Mock<IDistributedCacheAdapter> Cache;
+        protected internal Mock<ICacheManager> Cache;
         protected internal Mock<IRandomGenerator> RandomGenerator;
         protected internal Mock<ITripleDerbyRepository> Repository;
-        protected readonly Mock<IOptions<CacheConfig>> CacheOptions;
 
         public FeedingServiceTestBase()
         {
-            Cache = new Mock<IDistributedCacheAdapter>();
+            Cache = new Mock<ICacheManager>();
             RandomGenerator = new Mock<IRandomGenerator>();
-            CacheOptions = new Mock<IOptions<CacheConfig>>();
             Repository = new Mock<ITripleDerbyRepository>();
             
             Repository.Setup(x => x.GetAll<Feeding>()).ReturnsAsync(new List<Feeding>());
 
-            CacheOptions.Setup(x => x.Value).Returns(() => new CacheConfig { DefaultExpirationMinutes = 2 });
+            Cache.Setup(x => x.GetOrCreate(It.IsAny<string>(), It.IsAny<Func<Task<IEnumerable<FeedingsResult>>>>()));
 
-            Service = new FeedingService(Cache.Object, RandomGenerator.Object, Repository.Object, CacheOptions.Object);
+            Service = new FeedingService(Cache.Object, RandomGenerator.Object, Repository.Object);
         }
     }
 }
