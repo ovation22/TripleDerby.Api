@@ -48,7 +48,7 @@ namespace TripleDerby.Core.Services
             return await _cache.GetOrCreate(CacheKeys.Feedings, async () => await GetFeedings());
         }
 
-        public async Task<IEnumerable<FeedingsResult>> GetFeedings()
+        private async Task<IEnumerable<FeedingsResult>> GetFeedings()
         {
             var feedings = await _repository.GetAll<Feeding>();
 
