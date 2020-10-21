@@ -40,7 +40,7 @@ namespace TripleDerby.Api
             services.AddSwaggerConfig();
             services.AddApplicationInsightsTelemetry();
 
-            if (_hostContext.IsProduction())
+            if (!_hostContext.IsDevelopment())
             {
                 services.AddHealthCheckConfig(Configuration);
             }
@@ -86,7 +86,7 @@ namespace TripleDerby.Api
                 endpoints.MapControllers();
             });
 
-            if (_hostContext.IsProduction())
+            if (!_hostContext.IsDevelopment())
             {
                 app.UseHealthCheckConfig();
             }
