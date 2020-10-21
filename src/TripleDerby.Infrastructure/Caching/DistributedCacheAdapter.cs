@@ -22,5 +22,10 @@ namespace TripleDerby.Infrastructure.Caching
         {
             return _cache.SetStringAsync(key, value, options);
         }
+
+        public Task RemoveAsync(string key)
+        {
+            return _cache.RemoveAsync(key);
+        }
     }
 }
