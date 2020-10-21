@@ -43,6 +43,11 @@ namespace TripleDerby.Infrastructure.Caching
             return results;
         }
 
+        public async Task Remove(string key)
+        {
+            await _cache.RemoveAsync(key);
+        }
+
         private async Task SetCache<T>(string cacheKey, IEnumerable<T> results) where T : class
         {
             var options = new DistributedCacheEntryOptions

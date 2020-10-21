@@ -8,5 +8,7 @@ namespace TripleDerby.Core.Interfaces.Caching
         Task<string> GetStringAsync(string key);
 
         Task SetStringAsync(string key, string value, DistributedCacheEntryOptions options);
+
+        Task RemoveAsync(string key);
     }
 }
