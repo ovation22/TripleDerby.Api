@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using TripleDerby.Api;
 using Xunit;
 
-namespace TripleDerby.Integration.Tests
+namespace TripleDerby.Tests.Integration
 {
     public class FeedingTests :
         IClassFixture<CustomWebApplicationFactory<Startup>>
