@@ -8,6 +8,8 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["src/TripleDerby.Api/TripleDerby.Api.csproj", "src/TripleDerby.Api/"]
+COPY ["src/TripleDerby.Core/TripleDerby.Core.csproj", "src/TripleDerby.Core/"]
+COPY ["src/TripleDerby.Infrastructure/TripleDerby.Infrastructure.csproj", "src/TripleDerby.Infrastructure/"]
 RUN dotnet restore "src/TripleDerby.Api/TripleDerby.Api.csproj"
 COPY . .
 WORKDIR "/src/src/TripleDerby.Api"

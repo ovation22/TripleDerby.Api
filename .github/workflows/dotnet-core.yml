@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: dotnet build TripleDerby.Api.sln --configuration Release --no-restore 
     - name: Test
-      run: dotnet test TripleDerby.Api.sln --no-restore --verbosity normal /p:Exclude="[Tests*].*" --collect:"XPlat Code Coverage"
+      run: dotnet test TripleDerby.Api.sln --filter "FullyQualifiedName!~TripleDerby.Tests.Integration.DB" --no-restore --verbosity normal /p:Exclude="[Tests*].*" --collect:"XPlat Code Coverage"
     - uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
