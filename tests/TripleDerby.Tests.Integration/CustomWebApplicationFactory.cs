@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TripleDerby.Core.Entities;
 using TripleDerby.Infrastructure.Data;
 
-namespace TripleDerby.Integration.Tests
+namespace TripleDerby.Tests.Integration
 {
     public class CustomWebApplicationFactory<TStartup>
         : WebApplicationFactory<TStartup> where TStartup : class
