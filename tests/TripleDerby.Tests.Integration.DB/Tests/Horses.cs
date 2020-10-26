@@ -1,6 +1,8 @@
 using System.Net;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
+using TripleDerby.Core.DTOs;
 using Xunit;
 
 namespace TripleDerby.Tests.Integration.DB.Tests
@@ -16,7 +18,7 @@ namespace TripleDerby.Tests.Integration.DB.Tests
         }
 
         [Fact]
-        public async Task Test1()
+        public async Task ItGetsHorses()
         {
             // Arrange
             // Act
@@ -24,6 +26,9 @@ namespace TripleDerby.Tests.Integration.DB.Tests
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var viewResult = Assert.IsType<HttpResponseMessage>(response);
+            var model = Assert.IsAssignableFrom<HorsesResult>(JsonSerializer.Deserialize<HorsesResult>(await viewResult.Content.ReadAsStringAsync()));
+            Assert.NotNull(model);
         }
     }
 }
