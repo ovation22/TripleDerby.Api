@@ -16,7 +16,7 @@ namespace TripleDerby.Api.Tests.Controllers.RacesControllerTests
             var result = await Controller.GetAll();
 
             // Assert
-            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<OkObjectResult>(result.Result);
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace TripleDerby.Api.Tests.Controllers.RacesControllerTests
             var result = await Controller.GetAll();
 
             // Assert
-            Assert.IsAssignableFrom<BadRequestObjectResult>(result);
+            Assert.IsAssignableFrom<BadRequestObjectResult>(result.Result);
         }
 
         [Fact]

@@ -29,7 +29,7 @@ namespace TripleDerby.Api.Tests.Controllers.BreedingControllerTests
             var result = await Controller.Breed(_request);
 
             // Assert
-            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<OkObjectResult>(result.Result);
         }
 
         [Fact]
@@ -53,7 +53,7 @@ namespace TripleDerby.Api.Tests.Controllers.BreedingControllerTests
             var result = await Controller.Breed(_request);
 
             // Assert
-            Assert.IsAssignableFrom<BadRequestObjectResult>(result);
+            Assert.IsAssignableFrom<BadRequestObjectResult>(result.Result);
         }
 
         [Fact]

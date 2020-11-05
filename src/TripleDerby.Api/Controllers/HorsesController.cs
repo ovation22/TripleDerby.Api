@@ -26,10 +26,10 @@ namespace TripleDerby.Api.Controllers
 
         // GET: api/Horses
         [HttpGet]
-        [ProducesResponseType(typeof(HorsesResult), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> GetAll(int pageIndex = 0, int itemsPage = 100)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<HorsesResult>> GetAll(int pageIndex = 0, int itemsPage = 100)
         {
             try
             {
@@ -47,10 +47,10 @@ namespace TripleDerby.Api.Controllers
 
         // GET: api/Horses/5
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(HorseResult), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Get(Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<HorseResult>> Get(Guid id)
         {
             try
             {
