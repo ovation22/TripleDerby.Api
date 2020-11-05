@@ -27,10 +27,10 @@ namespace TripleDerby.Api.Controllers
 
         // GET: api/Breeding/Dams
         [HttpGet("Dams")]
-        [ProducesResponseType(typeof(IEnumerable<ParentHorse>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> GetDams()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<ParentHorse>>> GetDams()
         {
             try
             {
@@ -48,10 +48,10 @@ namespace TripleDerby.Api.Controllers
 
         // GET: api/Breeding/Sires
         [HttpGet("Sires")]
-        [ProducesResponseType(typeof(IEnumerable<ParentHorse>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> GetSires()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<ParentHorse>>> GetSires()
         {
             try
             {
@@ -69,10 +69,10 @@ namespace TripleDerby.Api.Controllers
 
         // GET: api/Breeding
         [HttpPost]
-        [ProducesResponseType(typeof(Foal), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Breed([FromBody] BreedRequest request)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Foal>> Breed([FromBody] BreedRequest request)
         {
             try
             {

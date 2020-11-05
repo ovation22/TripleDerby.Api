@@ -27,10 +27,10 @@ namespace TripleDerby.Api.Controllers
 
         // GET: api/Feedings
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<FeedingsResult>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> GetAll()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<FeedingsResult>>> GetAll()
         {
             try
             {
@@ -48,10 +48,10 @@ namespace TripleDerby.Api.Controllers
 
         // GET: api/Feedings/5
         [HttpGet("{feedingId}")]
-        [ProducesResponseType(typeof(FeedingResult), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Get(byte feedingId)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<FeedingResult>> Get(byte feedingId)
         {
             try
             {
@@ -69,10 +69,10 @@ namespace TripleDerby.Api.Controllers
 
         // GET: api/Feedings/5/guid
         [HttpPost("{feedingId}/{horseId}")]
-        [ProducesResponseType(typeof(FeedingSessionResult), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Feed(byte feedingId, Guid horseId)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<FeedingSessionResult>> Feed(byte feedingId, Guid horseId)
         {
             try
             {
