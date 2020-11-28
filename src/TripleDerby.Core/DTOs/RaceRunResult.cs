@@ -3,18 +3,18 @@ using System.Collections.Generic;
 
 namespace TripleDerby.Core.DTOs
 {
-    public class RaceRunResult
+    public record RaceRunResult
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; init; }
 
-        public byte RaceId { get; set; }
+        public byte RaceId { get; init; }
 
-        public string WinHorse { get; set; } = default!;
+        public string WinHorse { get; init; } = default!;
 
-        public string PlaceHorse { get; set; } = default!;
+        public string PlaceHorse { get; init; } = default!;
 
-        public string ShowHorse { get; set; } = default!;
+        public string ShowHorse { get; init; } = default!;
 
-        public List<string> PlayByPlay { get; set; } = default!;
+        public List<string> PlayByPlay { get; init; } = default!;
     }
 }

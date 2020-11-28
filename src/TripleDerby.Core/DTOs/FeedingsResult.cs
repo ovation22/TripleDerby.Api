@@ -1,11 +1,11 @@
 ﻿namespace TripleDerby.Core.DTOs
 {
-    public class FeedingsResult
+    public record FeedingsResult
     {
-        public byte Id { get; set; }
+        public byte Id { get; init; }
 
-        public string Name { get; set; } = default!;
+        public string Name { get; init; } = default!;
 
-        public string Description { get; set; } = default!;
+        public string Description { get; init; } = default!;
     }
 }

@@ -82,7 +82,7 @@ namespace TripleDerby.Infrastructure.Tests.Caching.CacheManagerTests
         {
             _methodCalled = true;
 
-            return await Task.FromResult(_feedingsResults.AsEnumerable());
+            return await Task.FromResult(_feedingsResults!.AsEnumerable());
         }
     }
 }

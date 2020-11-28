@@ -2,12 +2,12 @@
 
 namespace TripleDerby.Core.DTOs
 {
-    public class BreedRequest
+    public record BreedRequest
     {
-        public Guid UserId { get; set; }
+        public Guid UserId { get; init; }
 
-        public Guid SireId { get; set; }
+        public Guid SireId { get; init; }
 
-        public Guid DamId { get; set; }
+        public Guid DamId { get; init; }
     }
 }

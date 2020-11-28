@@ -2,14 +2,14 @@
 
 namespace TripleDerby.Core.DTOs
 {
-    public class Foal
+    public record Foal
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; init; }
 
-        public string Name { get; set; } = default!;
+        public string Name { get; init; } = default!;
 
-        public byte ColorId { get; set; }
+        public byte ColorId { get; init; }
 
-        public string Color { get; set; } = default!;
+        public string Color { get; init; } = default!;
     }
 }

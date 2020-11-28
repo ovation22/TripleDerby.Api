@@ -37,7 +37,7 @@ namespace TripleDerby.Infrastructure.Caching
             }
             else
             {
-                results = JsonSerializer.Deserialize<List<T>>(cacheEntry);
+                results = JsonSerializer.Deserialize<List<T>>(cacheEntry)!;
             }
 
             return results;
