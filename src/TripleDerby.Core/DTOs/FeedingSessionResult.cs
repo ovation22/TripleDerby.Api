@@ -2,8 +2,8 @@
 
 namespace TripleDerby.Core.DTOs
 {
-    public class FeedingSessionResult
+    public record FeedingSessionResult
     {
-        public FeedResponse Result { get; set; }
+        public FeedResponse Result { get; init; }
     }
 }

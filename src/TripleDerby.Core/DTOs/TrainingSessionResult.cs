@@ -1,7 +1,7 @@
 ﻿namespace TripleDerby.Core.DTOs
 {
-    public class TrainingSessionResult
+    public record TrainingSessionResult
     {
-        public string Result { get; set; } = default!;
+        public string Result { get; init; } = default!;
     }
 }

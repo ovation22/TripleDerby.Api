@@ -3,29 +3,29 @@ using System.Collections.Generic;
 
 namespace TripleDerby.Core.DTOs
 {
-    public class HorsesResult
+    public record HorsesResult
     {
-        public PaginationInfo PaginationInfo { get; set; } = default!;
+        public PaginationInfo PaginationInfo { get; init; } = default!;
         
-        public IEnumerable<Horse> Horses { get; set; } = new List<Horse>();
+        public IEnumerable<Horse> Horses { get; init; } = new List<Horse>();
 
-        public class Horse
+        public record Horse
         {
-            public Guid Id { get; set; }
+            public Guid Id { get; init; }
 
-            public string Name { get; set; } = default!;
+            public string Name { get; init; } = default!;
 
-            public string Color { get; set; } = default!;
+            public string Color { get; init; } = default!;
 
-            public short RaceStarts { get; set; }
+            public short RaceStarts { get; init; }
 
-            public short RaceWins { get; set; }
+            public short RaceWins { get; init; }
 
-            public short RacePlace { get; set; }
+            public short RacePlace { get; init; }
 
-            public short RaceShow { get; set; }
+            public short RaceShow { get; init; }
 
-            public int Earnings { get; set; }
+            public int Earnings { get; init; }
         }
     }
 }

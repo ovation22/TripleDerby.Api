@@ -1,12 +1,12 @@
 ﻿namespace TripleDerby.Core.DTOs
 {
-    public class PaginationInfo
+    public record PaginationInfo
     {
-        public int TotalItems { get; set; }
-        public int ItemsPerPage { get; set; }
-        public int ActualPage { get; set; }
-        public int TotalPages { get; set; }
-        public string Previous { get; set; } = default!;
-        public string Next { get; set; } = default!;
+        public int TotalItems { get; init; }
+        public int ItemsPerPage { get; init; }
+        public int ActualPage { get; init; }
+        public int TotalPages { get; init; }
+        public string Previous { get; init; } = default!;
+        public string Next { get; init; } = default!;
     }
 }

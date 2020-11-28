@@ -2,22 +2,22 @@
 
 namespace TripleDerby.Core.DTOs
 {
-    public class RacesResult
+    public record RacesResult
     {
-        public byte Id { get; set; }
+        public byte Id { get; init; }
 
-        public string Name { get; set; } = default!;
+        public string Name { get; init; } = default!;
 
-        public string Description { get; set; } = default!;
+        public string Description { get; init; } = default!;
 
-        public decimal Furlongs { get; set; }
+        public decimal Furlongs { get; init; }
 
-        public SurfaceId SurfaceId { get; set; }
+        public SurfaceId SurfaceId { get; init; }
 
-        public string Surface { get; set; } = default!;
+        public string Surface { get; init; } = default!;
 
-        public TrackId TrackId { get; set; }
+        public TrackId TrackId { get; init; }
 
-        public string Track { get; set; } = default!;
+        public string Track { get; init; } = default!;
     }
 }

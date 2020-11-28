@@ -2,26 +2,26 @@
 
 namespace TripleDerby.Core.DTOs
 {
-    public class HorseResult
+    public record HorseResult
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; init; }
 
-        public string Name { get; set; } = default!; 
+        public string Name { get; init; } = default!; 
         
-        public string Color { get; set; } = default!;
+        public string Color { get; init; } = default!;
 
-        public short RaceStarts { get; set; }
+        public short RaceStarts { get; init; }
 
-        public short RaceWins { get; set; }
+        public short RaceWins { get; init; }
 
-        public short RacePlace { get; set; }
+        public short RacePlace { get; init; }
 
-        public short RaceShow { get; set; }
+        public short RaceShow { get; init; }
 
-        public int Earnings { get; set; }
+        public int Earnings { get; init; }
 
-        public string? Sire { get; set; }
+        public string? Sire { get; init; }
 
-        public string? Dam { get; set; }
+        public string? Dam { get; init; }
     }
 }
