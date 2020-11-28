@@ -234,7 +234,7 @@ namespace TripleDerby.Core.Services
 
             potential = (byte) (potential + _randomGenerator.Next(mutationLowerBound, mutationUpperBound));
 
-            potential = (byte) (potential < 30 || potential > 95 ? 50 : potential);
+            potential = potential < 30 || potential > 95 ? 50 : potential;
 
             return potential;
         }
