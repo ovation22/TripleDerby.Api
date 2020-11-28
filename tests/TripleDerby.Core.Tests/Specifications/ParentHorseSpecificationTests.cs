@@ -30,7 +30,7 @@ namespace TripleDerby.Core.Tests.Specifications
 
             // Assert
             Assert.NotNull(result);
-            Assert.NotNull(result.Color);
+            Assert.NotNull(result!.Color);
             Assert.Equal(5, result.Statistics.Count);
         }
 

@@ -252,7 +252,7 @@ namespace TripleDerby.Core.Services
             }
             else
             {
-                results = JsonSerializer.Deserialize<List<ParentHorse>>(cacheValue);
+                results = JsonSerializer.Deserialize<List<ParentHorse>>(cacheValue)!;
             }
 
             return results;

@@ -19,7 +19,7 @@ namespace TripleDerby.Tests.Integration
                     d => d.ServiceType ==
                          typeof(DbContextOptions<TripleDerbyContext>));
 
-                services.Remove(descriptor);
+                services.Remove(descriptor!);
 
                 services.AddDbContextPool<TripleDerbyContext>(options =>
                 {
