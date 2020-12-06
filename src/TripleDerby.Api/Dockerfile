@@ -5,6 +5,9 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.5.0/wait /wait
+RUN /bin/bash -c 'ls -la /wait; chmod +x /wait; ls -la /wait'
+
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
 COPY ["src/TripleDerby.Api/TripleDerby.Api.csproj", "src/TripleDerby.Api/"]
@@ -21,8 +24,5 @@ RUN dotnet publish "TripleDerby.Api.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-
-ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.5.0/wait /wait
-RUN /bin/bash -c 'ls -la /wait; chmod +x /wait; ls -la /wait'
 
 CMD /wait && dotnet TripleDerby.Api.dll

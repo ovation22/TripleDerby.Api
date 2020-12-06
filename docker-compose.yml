@@ -9,6 +9,7 @@ services:
     depends_on:
       - db
       - redis
+
   db:
     image: "mcr.microsoft.com/mssql/server"
 
