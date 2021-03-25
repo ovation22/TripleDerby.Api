@@ -83,6 +83,7 @@ namespace TripleDerby.Core.Services
 
             var raceRun = new RaceRun
             {
+                RaceId = raceId,
                 ConditionId = ConditionId.Fast, // TODO: random condition
                 Horses = raceRunHorses.OrderBy(x => Guid.NewGuid()).ToList(),
                 Purse = 30000, // TODO
@@ -95,13 +96,11 @@ namespace TripleDerby.Core.Services
             return new RaceRunResult
             {
                 Id = Guid.NewGuid(),
+                RaceId = raceId,
                 WinHorse = "Winner!",
                 PlaceHorse = "Place",
                 ShowHorse = "Show",
-                PlayByPlay = new List<string>
-                {
-                    raceRun.RaceRunTicks.SelectMany(x => x.Note).ToString()!
-                }
+                PlayByPlay = raceRun.RaceRunTicks.Select(x => x.Note).ToList()
             };
         }
     }

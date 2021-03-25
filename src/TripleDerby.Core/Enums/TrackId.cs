@@ -2,5 +2,6 @@
 {
     public enum TrackId : byte
     {
+        Churchill = 1
     }
 }
