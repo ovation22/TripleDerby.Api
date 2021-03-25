@@ -58,28 +58,13 @@ namespace TripleDerby.Core.Services
 
         public async Task<RaceRunResult> Race(byte raceId, Guid horseId)
         {
+            var race = await _repository.Get(new RaceSpecification(raceId));
             var racers = await _repository.List(new HorseRandomRacerSpecification());
 
             var raceRunHorses = new List<RaceRunHorse> { new RaceRunHorse { HorseId = horseId, Lane = 1 } };
             raceRunHorses.AddRange(racers.Select(racer => new RaceRunHorse { HorseId = racer.Id, Lane = 2 })); // TODO: lane
 
-            var raceRunTicks = new List<RaceRunTick>
-            {
-                new RaceRunTick
-                {
-                    Tick = 1,
-                    Note = "Horse 1 is strong out of the gate!",
-                    RaceRunTickHorses = new List<RaceRunTickHorse>
-                    {
-                        new RaceRunTickHorse
-                        {
-                            HorseId = horseId,
-                            Lane = 1,
-                            Distance = 1
-                        }
-                    }
-                }
-            };
+            var raceRunTicks = CreateRaceRunTicks(horseId, race.Furlongs);
 
             var raceRun = new RaceRun
             {
@@ -102,6 +87,32 @@ namespace TripleDerby.Core.Services
                 ShowHorse = "Show",
                 PlayByPlay = raceRun.RaceRunTicks.Select(x => x.Note).ToList()
             };
+        }
+
+        private static List<RaceRunTick> CreateRaceRunTicks(Guid horseId, decimal raceFurlongs)
+        {
+            var distanceTraveled = 0M;
+            var raceDistance = raceFurlongs;
+            var raceRunTicks = new List<RaceRunTick>();
+
+            for (decimal i = 1M, tickDistance; distanceTraveled < raceDistance; i++, distanceTraveled += tickDistance)
+            {
+                byte lane = 1;
+                byte distance = 1;
+                tickDistance = 1M;
+
+                raceRunTicks.Add(new RaceRunTick
+                {
+                    Tick = (byte)i,
+                    Note = "Horse 1 is strong out of the gate!",
+                    RaceRunTickHorses = new List<RaceRunTickHorse>
+                    {
+                        new() {HorseId = horseId, Lane = lane, Distance = distance}
+                    }
+                });
+            }
+
+            return raceRunTicks;
         }
     }
 }

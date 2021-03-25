@@ -19,9 +19,14 @@ namespace TripleDerby.Core.Tests.Services.RaceServiceTests
         {
             _raceId = 9;
             _horseId = new Guid("B703FC6F-B72D-4048-9FEA-5264A50F8363");
+            var race = new Entities.Race
+            {
+                Id = _raceId
+            };
 
             Repository.Setup(x => x.List(It.IsAny<HorseRandomRacerSpecification>())).ReturnsAsync(new List<Horse>());
             Repository.Setup(x => x.Add(It.IsAny<RaceRun>())).Callback<RaceRun>(x => _raceRun = x);
+            Repository.Setup(x => x.Get(It.IsAny<RaceSpecification>())).ReturnsAsync(race);
         }
 
         [Fact]
