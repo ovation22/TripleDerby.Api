@@ -10,6 +10,7 @@ namespace TripleDerby.Infrastructure.Data
         }
 
         public virtual DbSet<Color> Colors { get; set; } = null!;
+        public virtual DbSet<Condition> Conditions { get; set; } = null!;
         public virtual DbSet<Feeding> Feedings { get; set; } = null!;
         public virtual DbSet<FeedingSession> FeedingSession { set; get; } = null!;
         public virtual DbSet<Horse> Horses { get; set; } = null!;
@@ -72,6 +73,13 @@ namespace TripleDerby.Infrastructure.Data
 
             modelBuilder.Entity<FeedingSession>()
                 .Property(c => c.Result)
+                .HasConversion<byte>();
+
+            modelBuilder.Entity<RaceRun>()
+                .HasOne(x => x.Race);
+
+            modelBuilder.Entity<RaceRun>()
+                .Property(c => c.ConditionId)
                 .HasConversion<byte>();
         }
     }

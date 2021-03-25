@@ -58,6 +58,22 @@ namespace TripleDerby.Infrastructure.Data
                 new HorseStatistic { Id = new Guid("F51C705F-9AC2-4E18-91B1-FB30D527774C"), HorseId = new Guid("2357E7CB-AE0F-4A36-9B64-1D544D14DB23"), StatisticId = StatisticId.Agility, Actual = 61, DominantPotential = 64, RecessivePotential = 71 },
                 new HorseStatistic { Id = new Guid("DB9C2292-7641-4C54-98A4-F095BBACC361"), HorseId = new Guid("2357E7CB-AE0F-4A36-9B64-1D544D14DB23"), StatisticId = StatisticId.Durability, Actual = 64, DominantPotential = 71, RecessivePotential = 61 }
             );
+
+            modelBuilder.Entity<Condition>().HasData(
+                new Condition { Id = ConditionId.Fast, Name = "Fast" }
+            );
+
+            modelBuilder.Entity<Surface>().HasData(
+                new Surface { Id = SurfaceId.Dirt, Name = "Dirt" }
+            );
+
+            modelBuilder.Entity<Track>().HasData(
+                new Track { Id = TrackId.Churchill, Name = "Churchill Downs" }
+            );
+
+            modelBuilder.Entity<Race>().HasData(
+                new Race { Id = 1, Name = "Derby", Description = "Run for the Roses", SurfaceId = SurfaceId.Dirt, TrackId = TrackId.Churchill, Furlongs = 10 }
+            );
         }
     }
 }
