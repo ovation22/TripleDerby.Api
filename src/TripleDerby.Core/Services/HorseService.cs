@@ -68,12 +68,7 @@ namespace TripleDerby.Core.Services
                     TotalItems = totalItems,
                     TotalPages =
                         int.Parse(Math.Ceiling((decimal)totalItems / itemsPage)
-                            .ToString(CultureInfo.InvariantCulture)),
-                    Next = pageIndex == int.Parse(Math.Ceiling((decimal)totalItems / itemsPage)
-                        .ToString(CultureInfo.InvariantCulture)) - 1
-                        ? "is-disabled"
-                        : "",
-                    Previous = pageIndex == 0 ? "is-disabled" : ""
+                            .ToString(CultureInfo.InvariantCulture))
                 }
             };
         }
