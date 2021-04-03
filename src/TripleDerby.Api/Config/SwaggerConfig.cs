@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using TripleDerby.Api.Filters;
 
 namespace TripleDerby.Api.Config
 {
@@ -18,6 +19,8 @@ namespace TripleDerby.Api.Config
                     Title = "TripleDerby",
                     Description = "A RESTful API for TripleDerby",
                 });
+
+                c.DocumentFilter<JsonPatchDocumentFilter>();
             });
         }
         public static void UseSwaggerConfig(this IApplicationBuilder app)

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.JsonPatch.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using TripleDerby.Core.DTOs;
 using TripleDerby.Core.Interfaces.Logging;
@@ -64,6 +66,32 @@ namespace TripleDerby.Api.Controllers
             }
 
             return BadRequest("Unable to return Horse");
+        }
+
+        [HttpPatch("{id}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<HorsePatch> patch)
+        {
+            try
+            {
+                await _horseService.Update(id, patch);
+
+                return new NoContentResult();
+            }
+            catch (JsonPatchException ex)
+            {
+                _logger.LogError(ex, ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+            }
+            
+            return BadRequest("Unable to update Horse");
         }
     }
 }
