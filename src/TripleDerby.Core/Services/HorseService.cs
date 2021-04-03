@@ -2,8 +2,10 @@
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.JsonPatch;
 using TripleDerby.Core.DTOs;
 using TripleDerby.Core.Entities;
+using TripleDerby.Core.Extensions;
 using TripleDerby.Core.Interfaces.Repositories;
 using TripleDerby.Core.Interfaces.Services;
 using TripleDerby.Core.Specifications;
@@ -71,6 +73,15 @@ namespace TripleDerby.Core.Services
                             .ToString(CultureInfo.InvariantCulture))
                 }
             };
+        }
+
+        public async Task Update(Guid id, JsonPatchDocument<HorsePatch> patch)
+        {
+            var horse = await _repository.Get(new HorseSpecification(id));
+
+            patch.Map<HorsePatch, Horse>().ApplyTo(horse);
+
+            await _repository.Save();
         }
     }
 }
