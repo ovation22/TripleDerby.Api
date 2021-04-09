@@ -10,7 +10,7 @@ namespace TripleDerby.Core.Generators
     public class HorseNameGenerator : IHorseNameGenerator
     {
         #region DATA
-        private const string NounData = @"
+        private const string Nouns = @"
 
 A
 
@@ -1042,7 +1042,7 @@ zipper
 zoo
 ";
 
-        private const string AdverbData = @" 
+        private const string Adverbs = @" 
 A
 
 abnormally 
@@ -1446,7 +1446,7 @@ zestfully
 zestily 
 ";
 
-        private const string AdjectiveData = @" 
+        private const string Adjectives = @" 
 A
 
 aback 
@@ -2658,23 +2658,23 @@ zonked
 ";
         #endregion
 
-        public List<string> Nouns;
-        public List<string> Adverbs;
-        public List<string> Adjectives;
+        private readonly List<string> _nouns;
+        private readonly List<string> _adverbs;
+        private readonly List<string> _adjectives;
         private readonly Random _random = new();
 
         public HorseNameGenerator()
         {
-            Nouns = ProcessRawData(NounData);
-            Adjectives = ProcessRawData(AdjectiveData);
-            Adverbs = ProcessRawData(AdverbData);
+            _nouns = ProcessRawData(Nouns);
+            _adverbs = ProcessRawData(Adverbs);
+            _adjectives = ProcessRawData(Adjectives);
         }
 
         public string Generate()
         {
-            var adverb = Adverbs[_random.Next(Adverbs.Count)];
-            var adjective = Adjectives[_random.Next(Adjectives.Count)];
-            var noun = Nouns[_random.Next(Nouns.Count)];
+            var adverb = _adverbs[_random.Next(_adverbs.Count)];
+            var adjective = _adjectives[_random.Next(_adjectives.Count)];
+            var noun = _nouns[_random.Next(_nouns.Count)];
 
             var r = _random.NextDouble();
 
@@ -2695,7 +2695,7 @@ zonked
             return candidates.Where(candidate => candidate.Length > 1).ToList();
         }
 
-        private string CapitalizeFirst(string s)
+        private static string CapitalizeFirst(string s)
         {
             if (String.IsNullOrEmpty(s))
             {
