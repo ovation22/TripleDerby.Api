@@ -68,6 +68,9 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
         public async Task ItSetsHorseName()
         {
             // Arrange
+            HorseNameGenerator.Setup(x => x.Generate())
+                .Returns("TODO");
+
             // Act
             await Service.Breed(_request);
 

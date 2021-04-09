@@ -5,7 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TripleDerby.Api.Config;
+using TripleDerby.Core.Generators;
 using TripleDerby.Core.Interfaces.Caching;
+using TripleDerby.Core.Interfaces.Generators;
 using TripleDerby.Core.Interfaces.Logging;
 using TripleDerby.Core.Interfaces.Repositories;
 using TripleDerby.Core.Interfaces.Services;
@@ -58,6 +60,8 @@ namespace TripleDerby.Api
             services.AddScoped<IFeedingService, FeedingService>();
             services.AddScoped<IBreedingService, BreedingService>();
             services.AddScoped<ITrainingService, TrainingService>();
+
+            services.AddSingleton<IHorseNameGenerator, HorseNameGenerator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

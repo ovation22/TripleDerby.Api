@@ -8,6 +8,7 @@ using TripleDerby.Core.Cache;
 using TripleDerby.Core.Entities;
 using TripleDerby.Core.Enums;
 using TripleDerby.Core.Interfaces.Caching;
+using TripleDerby.Core.Interfaces.Generators;
 using TripleDerby.Core.Interfaces.Repositories;
 using TripleDerby.Core.Interfaces.Utilities;
 using TripleDerby.Core.Services;
@@ -26,6 +27,7 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
         protected internal Mock<IRandomGenerator> RandomGenerator;
         protected internal Mock<ITripleDerbyRepository> Repository;
         protected readonly Mock<IOptions<CacheConfig>> CacheOptions;
+        protected readonly Mock<IHorseNameGenerator> HorseNameGenerator;
 
         public BreedingServiceTestBase()
         {
@@ -33,6 +35,7 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
             RandomGenerator = new Mock<IRandomGenerator>();
             Repository = new Mock<ITripleDerbyRepository>();
             CacheOptions = new Mock<IOptions<CacheConfig>>();
+            HorseNameGenerator = new Mock<IHorseNameGenerator>();
 
             CacheOptions.Setup(x => x.Value).Returns(() => new CacheConfig { DefaultExpirationMinutes = 2 });
 
@@ -46,10 +49,10 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
                 Color = color,
                 Statistics = new Collection<HorseStatistic>
                 {
-                    new HorseStatistic{StatisticId = StatisticId.Agility},
-                    new HorseStatistic{StatisticId = StatisticId.Durability},
-                    new HorseStatistic{StatisticId = StatisticId.Stamina},
-                    new HorseStatistic{StatisticId = StatisticId.Speed}
+                    new() {StatisticId = StatisticId.Agility},
+                    new() {StatisticId = StatisticId.Durability},
+                    new() {StatisticId = StatisticId.Stamina},
+                    new() {StatisticId = StatisticId.Speed}
                 }
             };
             Sire = new Horse
@@ -58,10 +61,10 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
                 Color = color,
                 Statistics = new Collection<HorseStatistic>
                 {
-                    new HorseStatistic{StatisticId = StatisticId.Agility},
-                    new HorseStatistic{StatisticId = StatisticId.Durability},
-                    new HorseStatistic{StatisticId = StatisticId.Stamina},
-                    new HorseStatistic{StatisticId = StatisticId.Speed}
+                    new() {StatisticId = StatisticId.Agility},
+                    new() {StatisticId = StatisticId.Durability},
+                    new() {StatisticId = StatisticId.Stamina},
+                    new() {StatisticId = StatisticId.Speed}
                 }
             };
 
@@ -76,7 +79,8 @@ namespace TripleDerby.Core.Tests.Services.BreedingServiceTests
                 .ReturnsAsync(new List<Horse>{ Dam })
                 .ReturnsAsync(new List<Horse> { Sire });
 
-            Service = new BreedingService(Cache.Object, Repository.Object, RandomGenerator.Object, CacheOptions.Object);
+            Service = new BreedingService(Cache.Object, Repository.Object, RandomGenerator.Object, CacheOptions.Object,
+                HorseNameGenerator.Object);
         }
     }
 }
