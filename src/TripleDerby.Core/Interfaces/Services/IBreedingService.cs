@@ -8,6 +8,6 @@ namespace TripleDerby.Core.Interfaces.Services
     {
         Task<IEnumerable<ParentHorse>> GetDams();
         Task<IEnumerable<ParentHorse>> GetSires();
-        Task<Foal> Breed(BreedRequest userId);
+        Task<Foal> Breed(BreedRequest request);
     }
 }

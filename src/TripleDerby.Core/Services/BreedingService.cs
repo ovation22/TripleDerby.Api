@@ -10,7 +10,6 @@ using TripleDerby.Core.Cache;
 using TripleDerby.Core.DTOs;
 using TripleDerby.Core.Entities;
 using TripleDerby.Core.Enums;
-using TripleDerby.Core.Generators;
 using TripleDerby.Core.Interfaces.Caching;
 using TripleDerby.Core.Interfaces.Generators;
 using TripleDerby.Core.Interfaces.Repositories;
@@ -131,7 +130,7 @@ namespace TripleDerby.Core.Services
             var colors = (await _repository.GetAll<Color>()).ToList();
 
             IEnumerable<Color> sortedColors = colors
-                .Where(x => includeSpecialColors || x.IsSpecial == false)
+                .Where(x => includeSpecialColors || !x.IsSpecial)
                 .OrderBy(x => 
                     _randomGenerator
                         .Next(colors.Count * (x.IsSpecial ? x.Weight / multiplier : x.Weight)));

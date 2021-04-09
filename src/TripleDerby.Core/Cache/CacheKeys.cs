@@ -1,6 +1,6 @@
 ﻿namespace TripleDerby.Core.Cache
 {
-    public class CacheKeys
+    public static class CacheKeys
     {
         public const string FeaturedDams = "FeaturedDams";
         public const string FeaturedSires = "FeaturedSires";
