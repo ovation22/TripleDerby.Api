@@ -10,7 +10,9 @@ using TripleDerby.Core.Cache;
 using TripleDerby.Core.DTOs;
 using TripleDerby.Core.Entities;
 using TripleDerby.Core.Enums;
+using TripleDerby.Core.Generators;
 using TripleDerby.Core.Interfaces.Caching;
+using TripleDerby.Core.Interfaces.Generators;
 using TripleDerby.Core.Interfaces.Repositories;
 using TripleDerby.Core.Interfaces.Services;
 using TripleDerby.Core.Interfaces.Utilities;
@@ -24,17 +26,20 @@ namespace TripleDerby.Core.Services
         private readonly IDistributedCacheAdapter _cache;
         private readonly IRandomGenerator _randomGenerator;
         private readonly ITripleDerbyRepository _repository;
+        private readonly IHorseNameGenerator _horseNameGenerator;
 
         public BreedingService(
             IDistributedCacheAdapter cache,
             ITripleDerbyRepository repository,
             IRandomGenerator randomGenerator,
-            IOptions<CacheConfig> cacheOptions
+            IOptions<CacheConfig> cacheOptions,
+            IHorseNameGenerator horseNameGenerator
         )
         {
             _cache = cache;
             _repository = repository;
             _randomGenerator = randomGenerator;
+            _horseNameGenerator = horseNameGenerator;
             _cacheExpirationMinutes = cacheOptions.Value.DefaultExpirationMinutes;
         }
 
@@ -57,10 +62,11 @@ namespace TripleDerby.Core.Services
             var legTypeId = GetRandomLegType();
             var color = await GetRandomColor(sire.Color.IsSpecial, dam.Color.IsSpecial, true);
             var statistics = GenerateHorseStatistics(sire.Statistics, dam.Statistics);
+            var name = _horseNameGenerator.Generate();
 
             var horse = new Horse
             {
-                Name = "TODO",
+                Name = name,
                 ColorId = color.Id,
                 LegTypeId = legTypeId,
                 IsMale = isMale,
