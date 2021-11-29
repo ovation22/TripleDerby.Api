@@ -16,7 +16,10 @@ namespace TripleDerby.Infrastructure.Tests.Data.Repositories.TripleDerbyReposito
         public async Task ItAddsHorse()
         {
             // Arrange
-            var horse = new Horse();
+            var horse = new Horse
+            {
+                Name = "horse"
+            };
 
             // Act
             Repository.Add(horse);
@@ -30,7 +33,10 @@ namespace TripleDerby.Infrastructure.Tests.Data.Repositories.TripleDerbyReposito
         public async Task ItReturnsNewlyAddedHorse()
         {
             // Arrange
-            var horse = new Horse();
+            var horse = new Horse
+            {
+                Name = "newly"
+            };
 
             // Act
             var newlyAddedHorse = Repository.Add(horse);

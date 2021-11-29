@@ -13,7 +13,7 @@ namespace TripleDerby.Infrastructure.Tests.Data.Repositories.TripleDerbyReposito
 
         public Delete(ContextFixture fixture) : base(fixture)
         {
-            _horse = new Horse { Id = new Guid("D6012CB6-6184-4AB4-BE14-B29C61F2CB32") };
+            _horse = new Horse { Id = new Guid("D6012CB6-6184-4AB4-BE14-B29C61F2CB32"), Name = "delete me" };
             Context.Horses.Add(_horse);
             Context.SaveChanges();
         }
