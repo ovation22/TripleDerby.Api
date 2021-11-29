@@ -12,7 +12,7 @@ namespace TripleDerby.Infrastructure.Tests.Data.Repositories.TripleDerbyReposito
 
         public Update(ContextFixture fixture) : base(fixture)
         {
-            _horse = new Horse{Id = new Guid("5FD2E324-A935-484E-8F9F-F52E7921EF21")};
+            _horse = new Horse{ Id = new Guid("5FD2E324-A935-484E-8F9F-F52E7921EF21"), Name = "horse" };
             Context.Horses.Add(_horse);
             Context.SaveChanges();
         }
